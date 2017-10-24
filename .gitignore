@@ -50,6 +50,7 @@ coverage.xml
 *.mo
 *.pot
 *.mat
+*.csv
 # Django stuff:
 *.log
 .static_storage/

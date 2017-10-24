@@ -6,7 +6,7 @@ class Propaties(object):
 
     def __init__(self, mat_properties):
         self.datatype = mat_properties['Datatype'][0][0][0][0]
-        self.sampling_interval = mat_properties['SamplingInterval'][0][0][0][0]
+        self.sampling_interval = int(mat_properties['SamplingInterval'][0][0][0][0])
         self.dataset_length = mat_properties['DatasetLength'][0][0][0][0]
         self.channels = list(map(Channel, mat_properties['Channels'][0][0][0]))
 
@@ -33,7 +33,7 @@ class Marker(object):
         self.channel = marker[0][0][0]
         self.date = marker[1][0]
         self.description = marker[2][0]
-        self.position = marker[4][0][0]
+        self.position = int(marker[4][0][0])
 
     def __repr__(self):
         return '[Position %d]' % self.position
