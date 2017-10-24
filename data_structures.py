@@ -26,3 +26,14 @@ class Channel(object):
 
     def __repr__(self):
         return '[Name: %s, CoordPhi: %d, CoordRad: %d, CoordTheta: %d]' % (self.name, self.coord_phi, self.coord_rad, self.corrd_theta)
+
+class Marker(object):
+
+    def __init__(self, marker):
+        self.channel = marker[0][0][0]
+        self.date = marker[1][0]
+        self.description = marker[2][0]
+        self.position = marker[4][0][0]
+
+    def __repr__(self):
+        return '[Position %d]' % self.position
