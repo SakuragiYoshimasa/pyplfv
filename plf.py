@@ -1,5 +1,5 @@
 '''
-Caluculation Phase locking value and nonparametric testing.
+Caluculation Phase locking factor and nonparametric testing.
 Referenced 'Oscillatory gamma-band (30-70 Hz) activity induced by a visual search task in humans' (Tallon et al (1997))
 Please see the document if you want more details.
 '''
@@ -39,7 +39,7 @@ def tve(signal, time_interval, f0, debug=False):
 
     sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
     wavelet = [morlet_wavelet(t, f0, sigma_f, sigma_t, wavelet_duration, A) for t in np.arange(-wavelet_duration/2.0, wavelet_duration/2.0, time_interval)]
-    convolved = np.convolve(signal, wavelet)
+    convolved = np.convolve(signal, wavelet, mode='same')
     res = np.power(np.abs(convolved), 2.0)
     if debug:
         print('convolved')
@@ -48,21 +48,27 @@ def tve(signal, time_interval, f0, debug=False):
         print(res)
     return res
 
+def tve_with_farray(signal, time_interval, farray, debug=False):
+
+    res_arr = []
+    for f in farray:
+        res_arr.append(tve(signal, time_interval, f))
+    return np.array(res_arr)
+
 '''
 Normalized complex Time-varing energy Pi(t,f0)
 '''
 def normalized_tve(signal, time_interval, f0, debug=False):
     sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
     wavelet = [morlet_wavelet(t, f0, sigma_f, sigma_t, wavelet_duration, A) for t in np.arange(-wavelet_duration/2.0, wavelet_duration/2.0, time_interval)]
-    convolved = np.convolve(signal, wavelet)
+    convolved = np.convolve(signal, wavelet, mode='same')
     res = convolved / np.abs(convolved)
     if debug:
-        print('convolved')
+        print('convolved %f' % f0)
         print(convolved)
         print('Pi(t,f0)')
         print(res)
     return res
-
 
 '''
 Pi as averaged across single trials
@@ -73,22 +79,31 @@ length_after_start: How much is time considered to have relevant with trials aft
 '''
 
 def plf(signal, time_interval, f0, start_time_of_trials, length_before_start, length_after_start, debug=False):
-
+    
     sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
-    plf_len = int(length_before_start / time_interval + length_after_start / time_interval + wavelet_duration / time_interval)
-    _plf = np.zeros(plf_len, dtype='complex128')
+    plf_len = max(int(length_before_start / time_interval + length_after_start / time_interval), wavelet_duration / time_interval)
+    normalized_tve_average = np.zeros(plf_len, dtype='complex128')
 
     for trial in start_time_of_trials:
         sig = signal[trial - int(length_before_start / time_interval) : trial + int(length_after_start / time_interval)]
         #print('t: %d, b: %d, a: %d' % (trial, int(length_before_start / time_interval) , int(length_after_start / time_interval)))
         #print(sig)
-        _plf += normalized_tve(sig, time_interval, f0)
-    _plf /= len(start_time_of_trials)
+        normalized_tve_average += normalized_tve(sig, time_interval, f0)
+    normalized_tve_average /= len(start_time_of_trials)
 
+    #Transform to the modules of these complex values.
+    _plf = []
+    for ntve_ave in normalized_tve_average:
+        _plf.append(np.sqrt(np.power(ntve_ave.real, 2.0) + np.power(ntve_ave.imag, 2.0)))
     if debug:
         print(_plf)
-
     return _plf
+
+def plf_with_array(signal, time_interval, farray, start_time_of_trials, length_before_start, length_after_start, debug=False):
+    res_arr = []
+    for f in farray:
+        res_arr.append(plf(signal, time_interval, f, start_time_of_trials, length_before_start, length_after_start, debug))
+    return res_arr
 
 '''
 Sample
@@ -99,10 +114,19 @@ if __name__ == '__main__':
     f0 = 20.0
     eeg_data = EEGData('./SampleData/sample.mat')
     sig = eeg_data.signals['F3']
-    print(len(sig))
-    print(morlet_wavelet(0.01, f0, sigma_f, sigma_t, wavelet_duration, A))
-    print(tve(sig[300:400], 0.002, 20.0))
-    print(normalized_tve(sig[300:400], 0.002, 20.0))
-    _plf = plf(sig, 0.002, 20.0, [1000], 1.0, 2.0)
-    print(_plf)
-    print(len(_plf))
+    #print(len(sig))
+    #print(morlet_wavelet(0.01, f0, sigma_f, sigma_t, wavelet_duration, A))
+    #print(tve(sig[300:400], 0.002, 20.0))
+    #print(normalized_tve(sig[300:400], 0.002, 20.0))
+    #_plf = plf(sig, 0.002, 20.0, [1000], 1.0, 2.0)
+    #print(_plf)
+    #print(len(_plf))
+    pos = eeg_data.markers[6].position
+    #tve = tve_with_farray(sig[pos - 500 : pos + 1000], 0.002, [1.0 * i for i in range(20,101)])
+    #tve = tve_with_farray(sig[pos - 500 : pos + 1000], 0.002, [1.0 * i for i in range(20,101)])
+    import matplotlib.pyplot as plt
+    #plt.matshow(tve)
+    #plt.show()
+    _plf = plf_with_array(sig, 0.002, [1.0 * i for i in range(20,101)], [eeg_data.markers[i].position for i in range(2, 100)], 1.0, 2.0)
+    plt.matshow(_plf)
+    plt.show()

@@ -60,7 +60,8 @@ class Marker(object):
         self.channel = marker[0][0][0]
         self.date = marker[1][0]
         self.description = marker[2][0]
+        self.points = marker[3][0][0]
         self.position = int(marker[4][0][0])
 
     def __repr__(self):
-        return '[Position %d, description %s]' % (self.position, self.description)
+        return '[description %s, Position %d, Points %s]' % (self.description, self.position, self.points)
