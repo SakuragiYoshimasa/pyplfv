@@ -46,7 +46,9 @@ show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], 1.0
 
 ```
 <br>
-![PLF](./Images/plf.png)    
+
+![PLF](./Images/plf.png)
+   
 <br>
 
 If you want more samples, please see 'plf_samples.py'.
