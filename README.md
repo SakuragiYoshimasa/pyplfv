@@ -13,6 +13,9 @@ Python codes to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
 
 ### Load matfile
 ```Python
+
+from data_structures import EEGData
+
 eeg_data = EEGData('./Data/Oct31_2017/yoshi01_sess1.mat')
 
 print(eeg_data.channel_names)

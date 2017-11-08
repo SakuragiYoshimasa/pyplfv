@@ -1,6 +1,4 @@
 import scipy.io as sio
-
-
 '''
 Load matfile and transform data structure
 '''
@@ -8,7 +6,7 @@ Load matfile and transform data structure
 class EEGData():
 
     def __init__(self, filename):
-            matadata = sio.loadmat('./Data/Oct31_2017/yoshi01_sess1.mat')
+            matadata = sio.loadmat(filename)
             self.properties = Propaties(matadata['Properties'])
             self.markers = list(map(Marker, matadata['Markers'][0][1:]))
             self.signals = {}

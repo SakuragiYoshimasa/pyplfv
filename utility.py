@@ -10,3 +10,6 @@ def datestring_to_microsec(date):
 
     sec = hour * 60 * 60 + minute * 60 + second
     return sec * 1000000 + millisec * 1000
+
+def add_instance_method(klass, method):
+    setattr(klass, method.__name__, method)  
