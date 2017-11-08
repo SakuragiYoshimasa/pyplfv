@@ -5,6 +5,7 @@ Please see the document if you want more details.
 '''
 
 import numpy as np
+from data_structures import EEGData
 
 def gen_parameters(f0, debug=False):
     '''
@@ -79,7 +80,7 @@ length_after_start: How much is time considered to have relevant with trials aft
 '''
 
 def plf(signal, time_interval, f0, start_time_of_trials, length_before_start, length_after_start, debug=False):
-    
+
     sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
     plf_len = max(int(length_before_start / time_interval + length_after_start / time_interval), wavelet_duration / time_interval)
     normalized_tve_average = np.zeros(plf_len, dtype='complex128')
@@ -105,8 +106,22 @@ def plf_with_array(signal, time_interval, farray, start_time_of_trials, length_b
         res_arr.append(plf(signal, time_interval, f, start_time_of_trials, length_before_start, length_after_start, debug))
     return res_arr
 
+
+def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, length_before_start, length_after_start):
+    sig = eeg_data.signals[sig_name]
+    import matplotlib.pyplot as plt
+
+    _plf = plf_with_array(sig,
+                          eeg_data.properties.sampling_interval / 1000000,
+                          farray,
+                          [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker],
+                          length_before_start,
+                          length_after_start)
+    plt.matshow(_plf)
+    plt.show()
+
 '''
-Sample
+Samples
 '''
 if __name__ == '__main__':
 
@@ -124,9 +139,10 @@ if __name__ == '__main__':
     pos = eeg_data.markers[6].position
     #tve = tve_with_farray(sig[pos - 500 : pos + 1000], 0.002, [1.0 * i for i in range(20,101)])
     #tve = tve_with_farray(sig[pos - 500 : pos + 1000], 0.002, [1.0 * i for i in range(20,101)])
-    import matplotlib.pyplot as plt
+    #import matplotlib.pyplot as plt
     #plt.matshow(tve)
     #plt.show()
-    _plf = plf_with_array(sig, 0.002, [1.0 * i for i in range(20,101)], [eeg_data.markers[i].position for i in range(2, 100)], 1.0, 2.0)
-    plt.matshow(_plf)
-    plt.show()
+    #_plf = plf_with_array(sig, 0.002, [1.0 * i for i in range(20,101)], [eeg_data.markers[i].position for i in range(2, 100)], 1.0, 2.0)
+    #plt.matshow(_plf)
+    #plt.show()
+    show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], 1.0, 2.0)
