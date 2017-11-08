@@ -1,7 +1,7 @@
 # EEG Data Processing
 
-Python codes to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
-
+Python package to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
+Still in development and not packaged.
 
 ### Dependency
 - numpy
