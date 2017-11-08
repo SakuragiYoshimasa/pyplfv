@@ -1,7 +1,27 @@
+import scipy.io as sio
+
+
+'''
+Load matfile and transform data structure
+'''
+
+class EEGData():
+
+    def __init__(self, filename):
+            matadata = sio.loadmat('./Data/Oct31_2017/yoshi01_sess1.mat')
+            self.properties = Propaties(matadata['Properties'])
+            self.markers = list(map(Marker, matadata['Markers'][0][1:]))
+            self.signals = {}
+            self.channel_names = self.properties.channel_names()
+
+            for i in range(len(self.channel_names)):
+                self.signals[self.channel_names[i]] = matadata['EEGData'].T[i]
+
 '''
 This class is properties in matlab data.
 Initializer get argument matadata['Properties']
 '''
+
 class Propaties(object):
 
     def __init__(self, mat_properties):
@@ -16,10 +36,13 @@ class Propaties(object):
     def print_channels(self):
         print(self.channels)
 
+    def channel_names(self):
+        return [self.channels[i].name for i in range(len(self.channels))]
+
 class Channel(object):
 
     def __init__(self, channel):
-        self.name = channel[0][0]
+        self.name = channel[6][0]
         self.coord_phi = channel[2][0][0]
         self.coord_rad = channel[3][0][0]
         self.corrd_theta = channel[4][0][0]
@@ -27,6 +50,12 @@ class Channel(object):
     def __repr__(self):
         return '[Name: %s, CoordPhi: %d, CoordRad: %d, CoordTheta: %d]' % (self.name, self.coord_phi, self.coord_rad, self.corrd_theta)
 
+
+'''
+Marker which are inserted offline and online
+In my case, output to recoder 'S255' to represent starts of trials.
+And 'Bad Min-Max' markers are inserted by Analyzer.
+'''
 class Marker(object):
 
     def __init__(self, marker):
@@ -36,4 +65,4 @@ class Marker(object):
         self.position = int(marker[4][0][0])
 
     def __repr__(self):
-        return '[Position %d]' % self.position
+        return '[Position %d, description %s]' % (self.position, self.description)
