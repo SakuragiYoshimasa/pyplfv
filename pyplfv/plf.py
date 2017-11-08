@@ -107,7 +107,7 @@ def plf_with_array(signal, time_interval, farray, start_time_of_trials, length_b
     return res_arr
 
 
-def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, length_before_start, length_after_start, save=False, filename='plf.png'):
+def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, length_before_start, length_after_start, save=False, filename='~/plf.png'):
     sig = eeg_data.signals[sig_name]
     import matplotlib.pyplot as plt
 
@@ -131,7 +131,7 @@ if __name__ == '__main__':
 
     from data_structures import EEGData
     f0 = 20.0
-    eeg_data = EEGData('./SampleData/sample.mat')
+    eeg_data = EEGData('./../SampleData/sample.mat')
     sig = eeg_data.signals['F3']
     #print(len(sig))
     #print(morlet_wavelet(0.01, f0, sigma_f, sigma_t, wavelet_duration, A))
