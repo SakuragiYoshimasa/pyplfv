@@ -16,7 +16,7 @@ Still in development and not packaged.
 
 from data_structures import EEGData
 
-eeg_data = EEGData('./Data/Oct31_2017/yoshi01_sess1.mat')
+eeg_data = EEGData('./SampleData/sample.mat')
 
 print(eeg_data.channel_names)
 print(eeg_data.properties)
@@ -24,6 +24,34 @@ print(eeg_data.markers)
 print(eeg_data.signals)
 ```
 
+### Phase-locking factor (PLF)
+
+Caluculation Phase locking factor and nonparametric testing.  
+Referenced
+```
+Oscillatory gamma-band (30-70 Hz) activity induced by a visual search task in humans (Tallon et al. 1997)
+```
+Please see the document if you want more details.  
+<br>
+There is an information about 'sig_name' in Appendix.  
+'trial_marker' is a marker you decided to represent the start of the trials.  
+
+
+
+```Python
+
+from plf import show_plf_spectgram
+#def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, length_before_start, length_after_start, save=False, filename='plf.png')
+show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], 1.0, 2.0, True, 'Images/plf.png')
+
+```
+<br>
+![PLF](./Images/plf.png)  
+<br>
+
+If you want more samples, please see 'plf_samples.py'.
+
+### Phase-locking Value (PLV)
 
 ## Appendix
 
