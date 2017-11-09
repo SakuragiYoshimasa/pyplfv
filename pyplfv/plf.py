@@ -125,30 +125,3 @@ def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, offset, length,
     if save:
         plt.savefig(filename)
     plt.show()
-
-'''
-Samples
-'''
-if __name__ == '__main__':
-
-    from data_structures import EEGData
-    f0 = 20.0
-    eeg_data = EEGData('./../SampleData/sample.mat')
-    sig = eeg_data.signals['F3']
-    #print(len(sig))
-    #print(morlet_wavelet(0.01, f0, sigma_f, sigma_t, wavelet_duration, A))
-    #print(tve(sig[300:400], 0.002, 20.0))
-    #print(normalized_tve(sig[300:400], 0.002, 20.0))
-    #_plf = plf(sig, 0.002, 20.0, [1000], 1.0, 2.0)
-    #print(_plf)
-    #print(len(_plf))
-    pos = eeg_data.markers[6].position
-    #tve = tve_with_farray(sig[pos - 500 : pos + 1000], 0.002, [1.0 * i for i in range(20,101)])
-    #tve = tve_with_farray(sig[pos - 500 : pos + 1000], 0.002, [1.0 * i for i in range(20,101)])
-    #import matplotlib.pyplot as plt
-    #plt.matshow(tve)
-    #plt.show()
-    #_plf = plf_with_array(sig, 0.002, [1.0 * i for i in range(20,101)], [eeg_data.markers[i].position for i in range(2, 100)], 1.0, 2.0)
-    #plt.matshow(_plf)
-    #plt.show()
-    show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], 1.0, 2.0)
