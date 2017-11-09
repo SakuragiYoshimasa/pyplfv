@@ -1,4 +1,4 @@
-# EEG Data Processing
+# pyplfv
 
 Python package to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
 Still in development and not packaged.
@@ -78,12 +78,22 @@ plt.show()
 <br>
 
 
-<img src="./Images/data1.png" width=300> -> </img><img src="./Images/plf_simulation1.png" width=300></img>
+<img src="./Images/data1.png" width=300>
+
+<br>
+↓  
+
+</img><img src="./Images/plf_simulation1.png" width=300></img>
 
 
 <br>
 
-<img src="./Images/data50Hz.png" width=300> -> </img><img src="./Images/plf_simulation50Hz.png" width=300></img>
+<img src="./Images/data50Hz.png" width=300>
+
+<br>
+↓  
+
+ </img><img src="./Images/plf_simulation50Hz.png" width=300></img>
 
 
 <br>
