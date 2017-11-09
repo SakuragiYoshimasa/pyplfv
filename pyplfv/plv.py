@@ -5,3 +5,4 @@ Please see the document if you want more details.
 '''
 
 import numpy as np
+from data_structures import EEGData

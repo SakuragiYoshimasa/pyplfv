@@ -41,14 +41,51 @@ There is an information about 'sig_name' in Appendix.
 ```Python
 
 from plf import show_plf_spectgram
-#def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, length_before_start, length_after_start, save=False, filename='plf.png')
-show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], 1.0, 2.0, True, 'Images/plf.png')
+#def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, offset, length, save=False, filename='plf.png')
+show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], -500, 1500, True, 'Images/plf.png')
 
 ```
+
+Other example,
+
+```Python
+matdata = sio.loadmat('SampleData/siulation_50Hz.mat')
+trial_num = len(matdata['seg'][0])
+arr = np.array(matdata['seg'], dtype='float128').T
+sig = np.hstack([arr[i] for i in range(trial_num)])
+time_interval = 0.002
+farray = [1.0 * i for i in range(4,100)]
+start_time_of_trials = [750 * i for i in range(trial_num)]
+length_before_start = 0
+length_after_start = 1.5
+
+_plf = plf_with_farray(sig,
+                      time_interval,
+                      farray,
+                      start_time_of_trials,
+                      length_before_start,
+                      length_after_start)
+plt.matshow(_plf, vmin=0, vmax=1.0)
+#plt.matshow(ave)
+plt.colorbar()
+plt.xlabel('Frame')
+plt.ylabel('Freq - 4 (Hz)')
+plt.savefig('./Images/plf_simulation2.png')
+plt.show()
+
+```
+
 <br>
 
-![PLF](./Images/plf.png)
-   
+
+<img src="./Images/data1.png" width=300> -> </img><img src="./Images/plf_simulation1.png" width=300></img>
+
+
+<br>
+
+<img src="./Images/data50Hz.png" width=300> -> </img><img src="./Images/plf_simulation50Hz.png" width=300></img>
+
+
 <br>
 
 If you want more samples, please see 'plf_samples.py'.

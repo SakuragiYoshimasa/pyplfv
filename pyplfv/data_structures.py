@@ -6,14 +6,14 @@ Load matfile and transform data structure
 class EEGData():
 
     def __init__(self, filename):
-            matadata = sio.loadmat(filename)
-            self.properties = Propaties(matadata['Properties'])
-            self.markers = list(map(Marker, matadata['Markers'][0][1:]))
+            matdata = sio.loadmat(filename)
+            self.properties = Propaties(matdata['Properties'])
+            self.markers = list(map(Marker, matdata['Markers'][0][1:]))
             self.signals = {}
             self.channel_names = self.properties.channel_names()
 
             for i in range(len(self.channel_names)):
-                self.signals[self.channel_names[i]] = matadata['EEGData'].T[i]
+                self.signals[self.channel_names[i]] = matdata['EEGData'].T[i]
 
 '''
 This class is properties in matlab data.
