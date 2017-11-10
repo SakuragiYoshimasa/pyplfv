@@ -125,3 +125,4 @@ def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, offset, length,
     if save:
         plt.savefig(filename)
     plt.show()
+    return np.array(_plf)
