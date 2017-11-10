@@ -2,7 +2,13 @@
 
 Python package to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
 Still in development and not packaged.  
-I will develop testings on next update.  
+I will develop testings on next update.
+
+## Installation
+
+```
+python setup.py install
+```
 
 ### Dependency
 - numpy
@@ -102,8 +108,9 @@ When you want to get the plv about each situations, you can add parameters 'tria
 If only you need is plv matrix, you can hide the heatmap by make show_mat=False.  
 
 ```Python
-
+from data_structures import EEGData
 from plv import plv_bet_2ch
+
 eeg_data = EEGData('./SampleData/sample.mat')
 #def plv_bet_2ch(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_mat=False):
 plvs = plv_bet_2ch(eeg_data, 'Pz', 'Cz', 'S255', np.arange(15.0, 80.0, 1.0), int(-1.0 / 0.002), int(3 / 0.002))
