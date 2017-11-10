@@ -1,7 +1,8 @@
 # pyplfv
 
 Python package to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
-Still in development and not packaged.
+Still in development and not packaged.  
+I will develop testings on next update.  
 
 ### Dependency
 - numpy
@@ -26,7 +27,7 @@ print(eeg_data.signals)
 
 ### Phase-locking factor (PLF)
 
-Caluculation Phase locking factor and nonparametric testing.  
+Calculate Phase locking factor and nonparametric testing.  
 Referenced
 ```
 Oscillatory gamma-band (30-70 Hz) activity induced by a visual search task in humans (Tallon et al. 1997)
@@ -77,30 +78,40 @@ plt.show()
 
 <br>
 
-
-<img src="./Images/data1.png" width=300>
-
-<br>
-↓  
-
-</img><img src="./Images/plf_simulation1.png" width=300></img>
-
-
-<br>
-
-<img src="./Images/data50Hz.png" width=300>
-
-<br>
-↓  
-
- </img><img src="./Images/plf_simulation50Hz.png" width=300></img>
-
+| Pseudo random added 10Hz gaussian | Pseudo random added 50Hz gaussian |  
+|-----------------------------------|-----------------------------------|
+| <img src="./Images/data1.png" width=300>  | <img src="./Images/data50Hz.png" width=300> |
+|  </img><img src="./Images/plf_simulation1.png" width=300></img>   |  </img><img src="./Images/plf_simulation50Hz.png" width=300></img>   |
 
 <br>
 
 If you want more samples, please see 'plf_samples.py'.
 
 ### Phase-locking Value (PLV)
+
+Calculate Phase locking value and statistical test based on surrogate data.  
+Referenced
+```
+Measuring Phase Synchrony in Brain Signals (Lachaux et al. 1997)
+```
+Please see the document if you want more details.  
+<br>
+
+
+```Python
+
+from plv import plv_bet_2ch
+eeg_data = EEGData('./SampleData/sample.mat')
+#plv_bet_2ch(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, show_mat=False):
+plvs = plv_bet_2ch(eeg_data, 'Pz', 'Cz', 'S255', np.arange(15.0, 80.0, 1.0), int(-1.0 / 0.002), int(3 / 0.002))
+
+```
+
+<br>
+
+<img src="./Images/plv_sample1.png">
+
+<br>
 
 ## Appendix
 
