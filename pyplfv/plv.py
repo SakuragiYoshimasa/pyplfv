@@ -10,6 +10,9 @@ t := time-bin
 import numpy as np
 from data_structures import EEGData
 
+#TODO Implment band-path filering
+#TODO implement random test
+
 def gen_parameters(f):
     sigma = np.float128(7.0 / f)
     wavelet_duration =  np.float128(2.0 * sigma)

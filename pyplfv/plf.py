@@ -6,6 +6,14 @@ Please see the document if you want more details.
 
 import numpy as np
 from data_structures import EEGData
+'''
+TODO implement test
+To test whether an activity is significantly phase-locked to stimulus onset,
+a statistical test (Rayleigh test) of uniformity of angle is used (Jervis et al., 1983)
+http://q-bio.jp/images/5/53/角度統計配布_qbio4th.pdf
+http://www.neurophys.wisc.edu/comp/docs/not011/not011.html
+https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.rayleigh.html
+'''
 
 def gen_parameters(f, debug=False):
     '''
