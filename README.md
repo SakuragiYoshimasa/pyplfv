@@ -129,6 +129,37 @@ plv_bet_2ch(eeg_data, 'Pz', 'Cz', 'S255', np.arange(15.0, 80.0, 1.0), int(-1.0 /
 | <img src="./Images/plv_sample_all.png" width=300>  | <img src="./Images/plv_sample_d0.png" width=300> | <img src="./Images/plv_sample_d7.png" width=300> |
 
 
+or
+
+```Python
+# plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
+matdata = sio.loadmat('SampleData/simulation_data1.mat')
+trial_num = len(matdata['seg'][0])
+arr = np.array(matdata['seg'], dtype='float128')
+arr = arr.T
+ch1 = np.hstack([arr[i] for i in range(trial_num)])
+
+matdata = sio.loadmat('SampleData/simulation_data2.mat')
+trial_num = len(matdata['seg'][0])
+arr = np.array(matdata['seg'], dtype='float128')
+arr = arr.T
+ch2 = np.hstack([arr[i] for i in range(trial_num)])
+
+farray = [1.0 * i for i in range(4,100)]
+start_time_of_trials = [750 * i for i in range(trial_num)]
+offset = 0
+length = int(1.5 / 0.002)
+
+plv_bet_2ch(ch1, ch2, 0.002, start_time_of_trials, farray, offset, length, False, True, 'Images/plv_simulation.png')
+
+```
+
+<br>
+
+Simulation_data1 and simulation_data2 which are inserted 10Hz.  
+These signals are perfectly phase-locked.  
+
+<img src="./Images/plv_sample_test.png" width=400>
 
 <br>
 

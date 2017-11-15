@@ -31,7 +31,36 @@ def calc_phai(signal, f, time_interval):
     convolved = np.convolve(signal, wavelet, mode='same')
     return np.angle(convolved)
 
-def plv_bet_2ch(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_mat=False):
+def plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
+
+    plvs = []
+    trial_num = len(start_time_of_trials)
+
+    for f in farray:
+        _plv = np.zeros(length, dtype='complex128')
+        for n in range(trial_num):
+            trial = start_time_of_trials[n]
+            phai1_tn = calc_phai(ch1[trial + offset : trial + offset + length], f, time_interval)
+            phai2_tn = calc_phai(ch2[trial + offset : trial + offset + length], f, time_interval)
+            phai_tn = phai1_tn - phai2_tn
+            _plv += np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)])) / trial_num
+        _plv = np.abs(_plv)
+        plvs.append(_plv)
+
+    #if show_mat:
+    import matplotlib.pyplot as plt
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(plvs, aspect='auto', vmin=0.0, vmax=1.0)
+    plt.colorbar(cax)
+    ax.set_xlabel('Frame')
+    ax.set_ylabel('Freq - %d (Hz)' % int(farray[0]))
+    plt.savefig(filename)
+    plt.show()
+    return np.array(plvs)
+
+
+def plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_test=False, save=False, filename='Images/plv.png'):
 
     trials = [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker]
 
@@ -40,26 +69,6 @@ def plv_bet_2ch(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, le
 
     trial_num = len(trials)
     time_interval = eeg_data.properties.sampling_interval / 1000000
-    plvs = []
-
-    for f in farray:
-        _plv = np.zeros(length, dtype='complex128')
-        for n in range(trial_num):
-            phai1_tn = calc_phai(eeg_data.signals[sig_name1][trials[n] + offset : trials[n] + offset + length], f, time_interval)
-            phai2_tn = calc_phai(eeg_data.signals[sig_name2][trials[n] + offset : trials[n] + offset + length], f, time_interval)
-            phai_tn = phai1_tn - phai2_tn
-            _plv += np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)])) / trial_num
-        _plv = np.abs(_plv)
-        plvs.append(_plv)
-
-    if show_mat:
-        import matplotlib.pyplot as plt
-        fig = plt.figure(figsize=(20,10))
-        ax = fig.add_subplot(111)
-        cax = ax.matshow(plvs, aspect='auto', vmin=0.0, vmax=1.0)
-        plt.colorbar(cax)
-        ax.set_xlabel('Frame')
-        ax.set_ylabel('Freq - 15.0 (Hz)')
-        plt.savefig('./Images/plv_sample_test.png')
-        plt.show()
-    return np.array(plvs)
+    ch1 = eeg_data.signals[sig_name1]
+    ch2 = eeg_data.signals[sig_name2]
+    return plv_bet_2ch(ch1, ch2, time_interval, trials, farray, offset, length, show_test, save, filename)
