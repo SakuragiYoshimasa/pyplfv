@@ -14,8 +14,8 @@ print(eeg_data.markers)
 #print(eeg_data.signals)
 print(eeg_data.properties.sampling_interval) #microsec
 
-from plf import show_plf_spectgram
-show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], int(-1.0 / 0.002), int(3 / 0.002), True, './Images/plf.png')
+from plf import show_plf_spectgram_from_eeg
+_plf, _ps = show_plf_spectgram_from_eeg(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], int(-1.0 / 0.002), int(3 / 0.002), False, './Images/plf.png')
 '''
 
 '''
@@ -32,11 +32,22 @@ for f in np.arange(100, 200.0, 100.0):
 '''
 
 
-matdata = sio.loadmat('SampleData/siulation_50Hz.mat')
+# not from eeg data sample
+matdata = sio.loadmat('SampleData/simulation_data1.mat')
 trial_num = len(matdata['seg'][0])
 arr = np.array(matdata['seg'], dtype='float128')
 arr = arr.T
 sig = np.hstack([arr[i] for i in range(trial_num)])
+time_interval = 0.002
+farray = [1.0 * i for i in range(4,100)]
+start_time_of_trials = [750 * i for i in range(trial_num)]
+offset = 0
+length = int(1.5 / 0.002)
+
+from plf import show_plf_spectgram
+
+_plf, _ps = show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, True, True, 'Images/plf_and_p_10Hz.png')
+
 
 #show data
 '''
@@ -54,55 +65,4 @@ plt.show()
 ave = np.zeros((96, 750))
 for i in range(100):
     ave += tve_with_farray(arr[i], 0.002, [1.0 * i for i in range(4,100)]) / 100.0
-'''
-
-# Sample
-#def plf_with_array(signal, time_interval, farray, start_time_of_trials, length_before_start, length_after_start, debug=False):
-'''
-time_interval = 0.002
-farray = [1.0 * i for i in range(4,100)]
-start_time_of_trials = [750 * i for i in range(trial_num)]
-length_before_start = 0
-length_after_start = 1.5
-
-_plf = plf_with_farray(sig,
-                      time_interval,
-                      farray,
-                      start_time_of_trials,
-                      length_before_start,
-                      length_after_start)
-plt.matshow(_plf, vmin=0, vmax=1.0)
-#plt.matshow(ave)
-plt.colorbar()
-plt.xlabel('Frame')
-plt.ylabel('Freq - 4 (Hz)')
-plt.savefig('./Images/plf_simulation2.png')
-plt.show()
-'''
-
-#Samples
-#normalized_tve_with_farray
-'''
-ave = np.zeros((96, 750), dtype='complex128')
-for i in range(100):
-    v = normalized_tve_with_farray(arr[i], 0.002, [1 * i for i in range(4,100)])
-    #print(v.shape)
-    ave += v / 100.0
-ave = np.abs(ave)
-#print(type(ave[0][0]))
-
-plt.matshow(ave, vmin=0, vmax=1.0)
-#plt.matshow(ave)
-plt.colorbar()
-plt.xlabel('Frame')
-plt.ylabel('Freq - 4 (Hz)')
-#plt.savefig('./Images/plf_simulation.png')
-plt.show()
-
-plt.matshow(ave - np.abs(matdata['PLF'][3:99]), vmin=0, vmax=1.0)
-plt.colorbar()
-plt.xlabel('Frame')
-plt.ylabel('Freq - 1 (Hz)')
-plt.savefig('./Images/plf_simulation.png')
-plt.show()
 '''

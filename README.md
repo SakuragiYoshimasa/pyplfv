@@ -1,7 +1,7 @@
 # pyplfv
 
 Python package to process EEG data from BrainVision's 'Analyzer' and 'Recorder'.
-Still in development and not packaged.  
+Still in development.  
 I will develop testings on next update.
 
 ## Installation
@@ -42,14 +42,15 @@ Please see the document if you want more details.
 <br>
 There is an information about 'sig_name' in Appendix.  
 'trial_marker' is a marker you decided to represent the start of the trials.  
-show_plf_spectgram returns plf matrix which is type of numpy.array.
-
+show_plf_spectgram returns plf matrix and p values matrix which are type of numpy.array.  
+The p values are calculated to test whether an activity is significantly phase-locked to stimulus onset,  
+a statistical test (Rayleigh test) of uniformity of angle is used (Jervis et al., 1983)  
 
 ```Python
 
 from plf import show_plf_spectgram
-#def show_plf_spectgram(eeg_data, sig_name, trial_marker, farray, offset, length, save=False, filename='plf.png')
-plfs = show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], -500, 1500, True, 'Images/plf.png')
+#def show_plf_spectgram_from_eeg(eeg_data, sig_name, trial_marker, farray, offset, length, show_p=False, save=False, filename='./plf.png'):
+plfs, ps = show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], -500, 1500, True, True, 'Images/plf.png')
 
 ```
 
@@ -58,36 +59,28 @@ Other example,
 ```Python
 matdata = sio.loadmat('SampleData/siulation_50Hz.mat')
 trial_num = len(matdata['seg'][0])
-arr = np.array(matdata['seg'], dtype='float128').T
+arr = np.array(matdata['seg'], dtype='float128')
+arr = arr.T
 sig = np.hstack([arr[i] for i in range(trial_num)])
 time_interval = 0.002
 farray = [1.0 * i for i in range(4,100)]
 start_time_of_trials = [750 * i for i in range(trial_num)]
-length_before_start = 0
-length_after_start = 1.5
+offset = 0
+length = int(1.5 / 0.002)
 
-_plf = plf_with_farray(sig,
-                      time_interval,
-                      farray,
-                      start_time_of_trials,
-                      length_before_start,
-                      length_after_start)
-plt.matshow(_plf, vmin=0, vmax=1.0)
-#plt.matshow(ave)
-plt.colorbar()
-plt.xlabel('Frame')
-plt.ylabel('Freq - 4 (Hz)')
-plt.savefig('./Images/plf_simulation2.png')
-plt.show()
+from plf import show_plf_spectgram
+#def show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p=False, save=False, filename='.plf.png'):
+plfs, ps = show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p=True)
 
 ```
 
 <br>
 
-| Pseudo random added 10Hz gaussian | Pseudo random added 50Hz gaussian |  
-|-----------------------------------|-----------------------------------|
-| <img src="./Images/data1.png" width=400>  | <img src="./Images/data50Hz.png" width=400> |
-|  </img><img src="./Images/plf_simulation1.png" width=400></img>   |  </img><img src="./Images/plf_simulation50Hz.png" width=400></img>   |
+|         | Pseudo random added 10Hz gaussian | Pseudo random added 50Hz gaussian |  
+|-------------------|-----------------------------------|-----------------------------------|
+| signals           | <img src="./Images/data1.png" width=400>  | <img src="./Images/data50Hz.png" width=400> |
+| PLF |  </img><img src="./Images/plf_simulation1.png" width=400></img>   |  </img><img src="./Images/plf_simulation50Hz.png" width=400></img>   |
+| PLF /w p values   |  </img><img src="./Images/plf_and_p_10Hz.png" width=400></img>   |  </img><img src="./Images/plf_and_p_50Hz.png" width=400></img>   |
 
 <br>
 
