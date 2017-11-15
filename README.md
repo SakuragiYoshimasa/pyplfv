@@ -150,7 +150,7 @@ start_time_of_trials = [750 * i for i in range(trial_num)]
 offset = 0
 length = int(1.5 / 0.002)
 
-plv_bet_2ch(ch1, ch2, 0.002, start_time_of_trials, farray, offset, length, False, True, 'Images/plv_simulation.png')
+plvs, plss = show_plv_bet_2ch(ch1, ch2, 0.002, start_time_of_trials, farray, offset, length, True, True, 'Images/plv_simulation_wtest.png')
 
 ```
 
@@ -159,9 +159,13 @@ plv_bet_2ch(ch1, ch2, 0.002, start_time_of_trials, farray, offset, length, False
 Simulation_data1 and simulation_data2 which are inserted 10Hz.  
 These signals are perfectly phase-locked.  
 
-<img src="./Images/plv_sample_test.png" width=400>
+<img src="./Images/plv_simulation.png" width=400>  
 
 <br>
+
+With surrogate data test.
+
+<img src="./Images/plv_simulation_wtest.png" width=400>  
 
 ## Appendix
 
