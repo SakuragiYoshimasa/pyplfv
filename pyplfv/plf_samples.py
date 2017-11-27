@@ -1,8 +1,8 @@
 #coding: utf-8
-from data_structures import EEGData
+from pyplfv.data_structures import EEGData
 import sys
 import scipy.io as sio
-from plf import plf_with_farray, tve_with_farray, morlet_wavelet, gen_parameters, normalized_tve_with_farray
+from pyplfv.plf import plf_with_farray, tve_with_farray, morlet_wavelet, gen_parameters, normalized_tve_with_farray
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -44,7 +44,7 @@ start_time_of_trials = [750 * i for i in range(trial_num)]
 offset = 0
 length = int(1.5 / 0.002)
 
-from plf import show_plf_spectgram
+from pyplfv.plf import show_plf_spectgram
 
 _plf, _ps = show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, True, True, 'Images/plf_and_p_10Hz.png')
 

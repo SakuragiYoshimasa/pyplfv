@@ -5,7 +5,7 @@ Please see the document if you want more details.
 '''
 
 import numpy as np
-from data_structures import EEGData
+from pyplfv.data_structures import EEGData
 
 '''
 To test whether an activity is significantly phase-locked to stimulus onset,

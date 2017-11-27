@@ -9,7 +9,7 @@ t := time-bin
 
 import numpy as np
 import random
-from data_structures import EEGData
+from pyplfv.data_structures import EEGData
 
 
 '''

@@ -59,6 +59,7 @@ class Marker(object):
     def __init__(self, marker):
         self.channel = marker[0][0][0]
         self.date = marker[1][0]
+        self.description = ''
         if len(marker[2]) > 0:
             self.description = marker[2][0]
         self.points = marker[3][0][0]
