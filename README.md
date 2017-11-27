@@ -7,7 +7,13 @@ I will develop testings on next update.
 ## Installation
 
 ```
-python setup.py install
+python setup.py install --record files.txt
+```
+
+### Unsntall
+
+```
+cat files.txt | xargs rm -rf
 ```
 
 ### Dependency
