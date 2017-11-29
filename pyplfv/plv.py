@@ -51,8 +51,7 @@ def calc_phai(signal, f, time_interval):
     convolved = np.convolve(signal, wavelet, mode='same')
     return np.angle(convolved)
 
-def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
-
+def plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length):
     plvs = []
     plss = []
     trial_num = len(start_time_of_trials)
@@ -76,6 +75,23 @@ def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offs
         pls = cacl_pls(_plv, phai1_tn_arr, phai2_tn_arr)
         plvs.append(_plv)
         plss.append(pls)
+
+def plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_test=False, save=False, filename='Images/plv.png'):
+
+    trials = [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker]
+
+    if trial_filering:
+        trials = [trials[n] for n in trial_filter]
+
+    trial_num = len(trials)
+    time_interval = eeg_data.properties.sampling_interval / 1000000
+    ch1 = eeg_data.signals[sig_name1]
+    ch2 = eeg_data.signals[sig_name2]
+    return plv_bet_2ch(ch1, ch2, time_interval, trials, farray, offset, length, show_test, save, filename)
+
+def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
+
+    plvs, plss = plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length)
 
     import matplotlib.pyplot as plt
     if not show_test:
@@ -108,17 +124,3 @@ def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offs
             plt.savefig(filename)
         plt.show()
     return [np.array(plvs), np.array(plss)]
-
-
-def show_plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_test=False, save=False, filename='Images/plv.png'):
-
-    trials = [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker]
-
-    if trial_filering:
-        trials = [trials[n] for n in trial_filter]
-
-    trial_num = len(trials)
-    time_interval = eeg_data.properties.sampling_interval / 1000000
-    ch1 = eeg_data.signals[sig_name1]
-    ch2 = eeg_data.signals[sig_name2]
-    return show_plv_bet_2ch(ch1, ch2, time_interval, trials, farray, offset, length, show_test, save, filename)
