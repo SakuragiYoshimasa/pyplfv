@@ -75,6 +75,7 @@ def plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, l
         pls = cacl_pls(_plv, phai1_tn_arr, phai2_tn_arr)
         plvs.append(_plv)
         plss.append(pls)
+    return plvs, plss
 
 def plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_test=False, save=False, filename='Images/plv.png'):
 

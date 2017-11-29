@@ -1,7 +1,7 @@
 
 from data_structures import EEGData
 import  numpy as np
-from pyplfv.plv import show_plv_bet_2ch_from_eeg
+
 from pyplfv.plv import show_plv_bet_2ch
 import scipy.io as sio
 
