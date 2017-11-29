@@ -39,8 +39,8 @@ def gen_parameters(f, debug=False):
     wavelet duration = 2 * sigma_t
     normaliation factor:A = (sigma_t * sqrt(pi))^(-1/2)
     '''
-    sigma_f = np.float128(f / 7.0)
-    sigma_t = np.float128(7.0 / (2.0 * np.pi * f))
+    sigma_f = np.float128(f / 10.0)
+    sigma_t = np.float128(10.0 / (2.0 * np.pi * f))
     wavelet_duration =  np.float128(2.0 * sigma_t)
     #A = 1.0 / np.sqrt(sigma_t * np.sqrt(np.pi))
     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
