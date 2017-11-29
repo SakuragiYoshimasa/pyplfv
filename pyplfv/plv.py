@@ -30,8 +30,8 @@ def cacl_pls(plv, phai1_tn_arr, phai2_tn_arr):
 Wavelet and parameters
 '''
 def gen_parameters(f):
-    sigma = np.float128(7.0 / f)
-    sigma_t = np.float128(7.0 / (2.0 * np.pi * f))
+    sigma = np.float128(10.0 / f)
+    sigma_t = np.float128(10.0 / (2.0 * np.pi * f))
     wavelet_duration =  np.float128(2.0 * sigma_t)
     return [sigma, wavelet_duration]
 
