@@ -87,7 +87,7 @@ def plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, o
     time_interval = eeg_data.properties.sampling_interval / 1000000
     ch1 = eeg_data.signals[sig_name1]
     ch2 = eeg_data.signals[sig_name2]
-    return plv_bet_2ch(ch1, ch2, time_interval, trials, farray, offset, length, show_test, save, filename)
+    return plv_bet_2ch(ch1, ch2, time_interval, trials, farray, offset, length)
 
 def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
 
