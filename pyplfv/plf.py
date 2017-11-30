@@ -62,8 +62,7 @@ def plf(normalized_tve, start_time_of_trials, offset, length, test=False):
 def plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, test=False):
     _plf_with_farray = {}
     for f in normalized_tve_with_farray:
-        _plf = plf(normalized_tve_with_farray[f], start_time_of_trials, offset, length, test)
-        _plf_with_farray[f] = _plf
+        _plf_with_farray[f] = plf(normalized_tve_with_farray[f], start_time_of_trials, offset, length, test)
     return _plf_with_farray
 
 def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, test=False):

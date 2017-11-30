@@ -24,9 +24,7 @@ def tve_with_farray(waveleted_signal_with_farray):
 def tve_of_eegdata_with_farray(waveleted_eegdata_with_farray):
     _tve_of_eegdata_with_farray = {}
     for ch in waveleted_eegdata_with_farray:
-        _waveleted_signal_with_farray = waveleted_eegdata_with_farray[ch]
-        _tve_with_farray = tve_with_farray(_waveleted_signal_with_farray)
-        _tve_of_eegdata_with_farray[ch] = _tve_with_farray
+        _tve_of_eegdata_with_farray[ch] = tve_with_farray(waveleted_eegdata_with_farray[ch])
     return _tve_of_eegdata_with_farray
 
 def save_tve(waveleted_signal, filename):
@@ -60,9 +58,7 @@ def normalized_tve_with_farray(waveleted_signal_with_farray):
 def normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray):
     _normalized_tve_of_eegdata_with_farray = {}
     for ch in waveleted_eegdata_with_farray:
-        _waveleted_signal_with_farray = waveleted_eegdata_with_farray[ch]
-        _normalized_tve_with_farray = normalized_tve_with_farray(_waveleted_signal_with_farray)
-        _normalized_tve_of_eegdata_with_farray[ch] = _normalized_tve_with_farray
+        _normalized_tve_of_eegdata_with_farray[ch] = normalized_tve_with_farray(waveleted_eegdata_with_farray[ch])
     return _normalized_tve_of_eegdata_with_farray
 
 def save_normalized_tve(waveleted_signal, filename):

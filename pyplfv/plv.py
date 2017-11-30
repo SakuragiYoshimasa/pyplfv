@@ -10,7 +10,8 @@ t := time-bin
 import numpy as np
 import random
 from pyplfv.data_structures import EEGData
-
+from pyplfv.utility import load_intermediate_data
+from pyplfv.utility import save_intermediate_data
 
 '''
 Phase-locking statistics(PLS)
@@ -29,6 +30,7 @@ def cacl_pls(plv, phai1_tn_arr, phai2_tn_arr):
 '''
 Wavelet and parameters
 '''
+'''
 def gen_parameters(f):
     sigma = np.float128(10.0 / f)
     sigma_t = np.float128(10.0 / (2.0 * np.pi * f))
@@ -39,19 +41,51 @@ def gabor_wavelet(t, f, sigma):
     time_domain = np.exp(- np.power(t, 2.0) / (2.0 * np.power(sigma, 2.0)))
     freq_domain = np.exp(-2.0j * np.pi * f * t)
     return time_domain * freq_domain
-
+'''
 '''
 PLV
 '''
 #return phai(t,n)
-def calc_phai(signal, f, time_interval):
+def calc_phai(waveleted_signal):
+    return np.angle(waveleted_signal)
 
-    sigma, wavelet_duration = gen_parameters(f)
-    wavelet = [gabor_wavelet(t, f, sigma) for t in np.arange(-wavelet_duration, wavelet_duration + time_interval, time_interval)]
-    convolved = np.convolve(signal, wavelet, mode='same')
-    return np.angle(convolved)
+def plv(waveleted_ch1, waveleted_ch2, start_time_of_trials, offset, length):
 
-def plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length):
+    trial_num = len(start_time_of_trials)
+    _plv = np.zeros(length, dtype='complex128')
+    phai1_tn_arr = []
+    phai2_tn_arr = []
+
+    for n in range(trial_num):
+        trial = start_time_of_trials[n]
+        phai1_tn = calc_phai(waveleted_ch1[trial + offset : trial + offset + length])
+        phai2_tn = calc_phai(waveleted_ch2[trial + offset : trial + offset + length])
+        phai_tn = phai1_tn - phai2_tn
+        _plv += np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)])) / trial_num
+        phai1_tn_arr.append(phai1_tn)
+        phai2_tn_arr.append(phai2_tn)
+        _plv = np.abs(_plv)
+         #pls = cacl_pls(_plv, phai1_tn_arr, phai2_tn_arr)
+    return _plv
+
+def plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length):
+    _plv_with_farray = {}
+    for f in waveleted_ch1_with_farray:
+        _plv_with_farray[f] = plv(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_time_of_trials, offset, length)
+    return _plv_with_farray
+
+def save_plv(waveleted_ch1, waveleted_ch2, start_time_of_trials, offset, length, filename):
+    _plv = plv(waveleted_ch1, waveleted_ch2, start_time_of_trials, offset, length)
+    save_intermediate_data(filename, _plv)
+    return _plv
+
+def save_plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length, filename):
+    _plv_with_farray = plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length)
+    save_intermediate_data(filename, _plv_with_farray)
+    return _plv_with_farray
+
+'''
+def plv_bet_2ch(waveleted_ch1, waveleted_ch2, time_interval, start_time_of_trials, farray, offset, length):
     plvs = []
     plss = []
     trial_num = len(start_time_of_trials)
@@ -76,7 +110,6 @@ def plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, l
         plvs.append(_plv)
         plss.append(pls)
     return plvs, plss
-
 def plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_test=False, save=False, filename='Images/plv.png'):
 
     trials = [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker]
@@ -125,3 +158,4 @@ def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offs
             plt.savefig(filename)
         plt.show()
     return [np.array(plvs), np.array(plss)]
+'''
