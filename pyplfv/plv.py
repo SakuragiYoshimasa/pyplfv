@@ -28,21 +28,6 @@ def cacl_pls(plv, phai1_tn_arr, phai2_tn_arr):
     return surr_plv / plv
 
 '''
-Wavelet and parameters
-'''
-'''
-def gen_parameters(f):
-    sigma = np.float128(10.0 / f)
-    sigma_t = np.float128(10.0 / (2.0 * np.pi * f))
-    wavelet_duration =  np.float128(2.0 * sigma_t)
-    return [sigma, wavelet_duration]
-
-def gabor_wavelet(t, f, sigma):
-    time_domain = np.exp(- np.power(t, 2.0) / (2.0 * np.power(sigma, 2.0)))
-    freq_domain = np.exp(-2.0j * np.pi * f * t)
-    return time_domain * freq_domain
-'''
-'''
 PLV
 '''
 #return phai(t,n)

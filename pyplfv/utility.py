@@ -15,7 +15,7 @@ def datestring_to_microsec(date):
 def add_instance_method(klass, method):
     setattr(klass, method.__name__, method)
 
-def load_intermediate_data(filename, data):
+def load_intermediate_data(filename):
     with open(filename, mode='rb') as f:
         return pickle.load(f)
 
