@@ -24,7 +24,12 @@ for i in range(1, 3):
 '''
 
 #save
-
+'''
 _waveleted_signal_with_farray_data1 = load_intermediate_data('./SampleData/simulation_data1_wavelet_wfa.pkl')
 _waveleted_signal_with_farray_data2 = load_intermediate_data('./SampleData/simulation_data2_wavelet_wfa.pkl')
 save_plv_with_farray(_waveleted_signal_with_farray_data1, _waveleted_signal_with_farray_data2, start_time_of_trials, offset, length, './SampleData/simulation_data12_plv_wfa.pkl')
+'''
+
+# Load
+_plv = load_intermediate_data('./SampleData/simulation_data12_plv_wfa.pkl')
+print(_plv)

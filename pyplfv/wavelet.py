@@ -33,20 +33,22 @@ def waveleted_signal(signal, sampling_interval, f0):
     waveleted = np.convolve(signal, wavelet, mode='same')
     return waveleted
 
+def waveleted_signal_with_farray(signal, sampling_interval, farray):
+    waveleted_dict = {}
+    for f in farray:
+        waveleted = waveleted_signal(signal, sampling_interval, f)
+        waveleted_dict[str(f)] = waveleted
+    return waveleted_dict
+
 def save_waveleted_signal(signal, sampling_interval, f0, filename):
     waveleted = waveleted_signal(signal, sampling_interval, f0)
     save_intermediate_data(filename, waveleted)
     return waveleted
 
 def save_waveleted_signal_with_farray(signal, sampling_interval, farray, filename):
-
-    length = len(farray)
-    waveleted_dict = {}
-    for f in farray:
-        waveleted = waveleted_signal(signal, sampling_interval, f)
-        waveleted_dict[str(f)] = waveleted
-    save_intermediate_data(filename, waveleted_dict)
-    return  waveleted_dict
+    _waveleted_signal_with_farray = waveleted_signal_with_farray(signal, sampling_interval, farray)
+    save_intermediate_data(filename, _waveleted_signal_with_farray)
+    return _waveleted_signal_with_farray
 
 def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filename):
 

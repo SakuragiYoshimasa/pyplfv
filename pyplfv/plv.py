@@ -68,46 +68,7 @@ def save_plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, s
     _plv_with_farray = plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length)
     save_intermediate_data(filename, _plv_with_farray)
     return _plv_with_farray
-
 '''
-def plv_bet_2ch(waveleted_ch1, waveleted_ch2, time_interval, start_time_of_trials, farray, offset, length):
-    plvs = []
-    plss = []
-    trial_num = len(start_time_of_trials)
-
-    for f in farray:
-        _plv = np.zeros(length, dtype='complex128')
-        phai1_tn_arr = []
-        phai2_tn_arr = []
-
-        for n in range(trial_num):
-            trial = start_time_of_trials[n]
-            phai1_tn = calc_phai(ch1[trial + offset : trial + offset + length], f, time_interval)
-            phai2_tn = calc_phai(ch2[trial + offset : trial + offset + length], f, time_interval)
-
-            phai_tn = phai1_tn - phai2_tn
-            _plv += np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)])) / trial_num
-
-            phai1_tn_arr.append(phai1_tn)
-            phai2_tn_arr.append(phai2_tn)
-        _plv = np.abs(_plv)
-        pls = cacl_pls(_plv, phai1_tn_arr, phai2_tn_arr)
-        plvs.append(_plv)
-        plss.append(pls)
-    return plvs, plss
-def plv_bet_2ch_from_eeg(eeg_data, sig_name1, sig_name2, trial_marker, farray, offset, length, trial_filering=False, trial_filter=[], show_test=False, save=False, filename='Images/plv.png'):
-
-    trials = [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker]
-
-    if trial_filering:
-        trials = [trials[n] for n in trial_filter]
-
-    trial_num = len(trials)
-    time_interval = eeg_data.properties.sampling_interval / 1000000
-    ch1 = eeg_data.signals[sig_name1]
-    ch2 = eeg_data.signals[sig_name2]
-    return plv_bet_2ch(ch1, ch2, time_interval, trials, farray, offset, length)
-
 def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
 
     plvs, plss = plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length)
