@@ -38,17 +38,17 @@ def plv(waveleted_ch1, waveleted_ch2, start_time_of_trials, offset, length):
 
     trial_num = len(start_time_of_trials)
     _plv = np.zeros(length, dtype='complex128')
-    phai1_tn_arr = []
-    phai2_tn_arr = []
+    #phai1_tn_arr = []
+    #phai2_tn_arr = []
 
     for n in range(trial_num):
         trial = start_time_of_trials[n]
         phai1_tn = calc_phai(waveleted_ch1[trial + offset : trial + offset + length])
         phai2_tn = calc_phai(waveleted_ch2[trial + offset : trial + offset + length])
         phai_tn = phai1_tn - phai2_tn
-        _plv += np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)])) / trial_num
-        phai1_tn_arr.append(phai1_tn)
-        phai2_tn_arr.append(phai2_tn)
+        _plv = _plv + np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)])) / float(trial_num)
+        #phai1_tn_arr.append(phai1_tn)
+        #phai2_tn_arr.append(phai2_tn)
         _plv = np.abs(_plv)
          #pls = cacl_pls(_plv, phai1_tn_arr, phai2_tn_arr)
     return _plv
