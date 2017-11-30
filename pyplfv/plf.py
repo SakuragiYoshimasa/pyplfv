@@ -32,30 +32,6 @@ def rayleigh_p(Z, n):
     return  np.exp(-Z) * (f_term + s_term - t_term)
 
 '''
-Normalized complex Time-varing energy Pi(t,f0)
-'''
-def normalized_tve(signal, time_interval, f0, debug=False):
-
-    sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
-    wavelet = [morlet_wavelet(t, f0, sigma_f, sigma_t, wavelet_duration, A) for t in np.arange(-wavelet_duration, wavelet_duration + time_interval, time_interval)]
-    convolved = np.convolve(signal, wavelet, mode='same')
-    res = convolved / np.abs(convolved)
-
-    if debug:
-        print('convolved %f' % f0)
-        print(convolved)
-        print('Pi(t,f0)')
-        print(res)
-    return res
-
-def normalized_tve_with_farray(signal, time_interval, farray, debug=False):
-
-    res_arr = []
-    for f in farray:
-        res_arr.append(normalized_tve(signal, time_interval, f))
-    return np.array(res_arr)
-
-'''
 Pi as averaged across single trials
 Leadning to a complex value describing the phase distribution of the time-frew region centered on t and f0
 start_time_of_trials : the index of start timing of trials on signal array
