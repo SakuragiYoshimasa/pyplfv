@@ -42,8 +42,9 @@ plf returns the normalized_tve_average and p values about it(if test=True).
 
 def plf(normalized_tve, start_time_of_trials, offset, length, test=False):
     normalized_tve_average = np.zeros(length, dtype='complex128')
+    trial_num = float(len(start_time_of_trials))
     for trial in start_time_of_trials:
-        normalized_tve_average += normalized_tve[trial + offset : trial + offset + length]
+        normalized_tve_average += normalized_tve[trial + offset : trial + offset + length] / trial_num
     _plf = np.abs(normalized_tve_average)
     ## testing these p value
     '''

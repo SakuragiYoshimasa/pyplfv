@@ -14,7 +14,6 @@ save_waveleted_signal(signal=sig, sampling_interval=0.002, f0=2.0, filename='./S
 #save_waveleted_eegdata_with_farray(eegdata=eeg_data, sampling_interval=0.002, farray=np.anange(1.0, 20.0, 1.0), filename='./SampleData/wavelet_test2.pkl')
 '''
 
-
 #Save
 '''
 matdata = sio.loadmat('SampleData/simulation_data1.mat')
