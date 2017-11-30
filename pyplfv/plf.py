@@ -88,6 +88,20 @@ def save_plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start
     _plf_of_eegdata_with_farray = plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, test)
     save_intermediate_data(filename, _plf_of_eegdata_with_farray)
     return _plf_of_eegdata_with_farray
+
+def show_plf_with_farray(_plf_with_farray, filename=''):
+    _plfs = []
+    for f in _plf_with_farray:
+        _plfs.append(_plf_with_farray[f])
+    import matplotlib.pyplot as plt
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(_plfs, aspect='auto', vmin=0.0, vmax=1.0)
+    plt.colorbar(cax)
+    if filename != '':
+        plt.savefig(filename)
+    plt.show()
+
 '''
 def show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p=False, save=False, filename='.plf.png'):
 
