@@ -78,7 +78,7 @@ def save_plf(normalized_tve, start_time_of_trials, offset, length, filename,test
     save_intermediate_data(filename, _plf)
     return _plf
 
-def save_plf_with_array(normalized_tve_with_farray, start_time_of_trials, offset, length, filename, test=False):
+def save_plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, filename, test=False):
     _plf_with_farray = plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, test)
     save_intermediate_data(filename, _plf_with_farray)
     return _plf_with_farray
