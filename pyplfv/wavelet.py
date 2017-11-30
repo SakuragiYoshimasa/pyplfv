@@ -60,3 +60,4 @@ def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filen
             waveleted_dict[str(f)] = waveleted
         waveleted_eeddata[ch] = waveleted_dict
     save_intermediate_data(filename, waveleted_eeddata)
+    return  waveleted_eeddata

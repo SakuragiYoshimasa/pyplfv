@@ -1,4 +1,5 @@
 import scipy.io as sio
+
 '''
 Load matfile and transform data structure
 '''
