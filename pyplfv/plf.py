@@ -6,6 +6,8 @@ Please see the document if you want more details.
 
 import numpy as np
 from pyplfv.data_structures import EEGData
+from pyplfv.utility import load_intermediate_data
+from pyplfv.utility import save_intermediate_data
 
 '''
 To test whether an activity is significantly phase-locked to stimulus onset,
@@ -30,121 +32,63 @@ def rayleigh_p(Z, n):
     return  np.exp(-Z) * (f_term + s_term - t_term)
 
 '''
-Wavelet and parameters of that.
-'''
-def gen_parameters(f, debug=False):
-    '''
-    Constant ratio f0/sigma_f = 7
-    sigma_f = 1.0 / (2.0 * pi * sigma_f)
-    wavelet duration = 2 * sigma_t
-    normaliation factor:A = (sigma_t * sqrt(pi))^(-1/2)
-    '''
-    sigma_f = np.float128(f / 10.0)
-    sigma_t = np.float128(10.0 / (2.0 * np.pi * f))
-    wavelet_duration =  np.float128(2.0 * sigma_t)
-    #A = 1.0 / np.sqrt(sigma_t * np.sqrt(np.pi))
-    A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
-    if debug:
-        print('wavelet_duration %.6f, A: %.6f, sigma_f %.6f' % (wavelet_duration, A, sigma_f))
-    return  [sigma_f, sigma_t, wavelet_duration, A]
-
-
-def morlet_wavelet(t, f, sigma_f, sigma_t, wavelet_duration, A):
-    time_domain = np.exp(- np.power(t, 2.0) / (2.0 * np.power(sigma_t, 2.0)))
-    freq_domain = np.exp(-2.0j * np.pi * f * t)
-    return A * time_domain * freq_domain
-
-'''
-Time-varing energy[E(t,f0)] of the signal in a frequency band.
-Merely the result of the convolution of a complex wavelet 'from morlet_wavelet' with the signal 'signal'
-signal: signal sampled in 0 to n * time_interval [s] (n is a length of the array)
-time_interval: the time interval of signal [s]
-f0: the central frequency [Hz]
-'''
-
-def tve(signal, time_interval, f0, debug=False):
-
-    sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
-    wavelet = [morlet_wavelet(t, f0, sigma_f, sigma_t, wavelet_duration, A) for t in np.arange(-wavelet_duration, wavelet_duration + time_interval, time_interval)]
-    convolved = np.convolve(signal, wavelet, mode='same')
-    res = np.power(np.abs(convolved), 2.0)
-    if debug:
-        print('convolved')
-        print(convolved)
-        print('E(t,f0)')
-        print(res)
-    return res
-
-def tve_with_farray(signal, time_interval, farray, debug=False):
-
-    res_arr = []
-    for f in farray:
-        res_arr.append(tve(signal, time_interval, f))
-    return np.array(res_arr)
-
-'''
-Normalized complex Time-varing energy Pi(t,f0)
-'''
-def normalized_tve(signal, time_interval, f0, debug=False):
-
-    sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
-    wavelet = [morlet_wavelet(t, f0, sigma_f, sigma_t, wavelet_duration, A) for t in np.arange(-wavelet_duration, wavelet_duration + time_interval, time_interval)]
-    convolved = np.convolve(signal, wavelet, mode='same')
-    res = convolved / np.abs(convolved)
-
-    if debug:
-        print('convolved %f' % f0)
-        print(convolved)
-        print('Pi(t,f0)')
-        print(res)
-    return res
-
-def normalized_tve_with_farray(signal, time_interval, farray, debug=False):
-
-    res_arr = []
-    for f in farray:
-        res_arr.append(normalized_tve(signal, time_interval, f))
-    return np.array(res_arr)
-
-'''
-Pi as averaged across single trials
-Leadning to a complex value describing the phase distribution of the time-frew region centered on t and f0
+Pi are averaged across single trials
+Leadning to a complex value describing the phase distribution of the time-freq region centered on t and f0
 start_time_of_trials : the index of start timing of trials on signal array
 offset: How many frame are considered to have relevant with trials before that.
 length: How many frame are considered to have relevant with trials.
-
-plf returns the normalized_tve_average and p values about it.
+plf returns the normalized_tve_average and p values about it(if test=True).
 '''
 
-def plf(signal, time_interval, f0, start_time_of_trials, offset, length, debug=False):
-
-    sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0)
+def plf(normalized_tve, start_time_of_trials, offset, length, test=False):
     normalized_tve_average = np.zeros(length, dtype='complex128')
-
+    trial_num = float(len(start_time_of_trials))
     for trial in start_time_of_trials:
-        sig = signal[trial + offset : trial + offset + length]
-        normalized_tve_average += normalized_tve(sig, time_interval, f0) / len(start_time_of_trials)
-
+        normalized_tve_average += normalized_tve[trial + offset : trial + offset + length] / trial_num
+    _plf = np.abs(normalized_tve_average)
     ## testing these p value
-    p_arr = []
-    n = len(start_time_of_trials)
-    for i in range(length):
-        R = np.abs(normalized_tve_average[i])
-        Z = n * np.power(R, 2.0)
-        p = rayleigh_p(Z, n)
-        p_arr.append(p)
+    '''
+    if test:
+        p_arr = []
+        n = len(start_time_of_trials)
+        for i in range(length):
+            R = np.abs(normalized_tve_average[i])
+            Z = n * np.power(R, 2.0)
+            p = rayleigh_p(Z, n)
+            p_arr.append(p)
+        return [_plf, np.array(p_arr)]
+    '''
+    return _plf
 
-    return [np.abs(normalized_tve_average), np.array(p_arr)]
+def plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, test=False):
+    _plf_with_farray = {}
+    for f in normalized_tve_with_farray:
+        _plf_with_farray[f] = plf(normalized_tve_with_farray[f], start_time_of_trials, offset, length, test)
+    return _plf_with_farray
 
-def plf_with_farray(signal, time_interval, farray, start_time_of_trials, offset, length, debug=False):
+def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, test=False):
+    _plf_of_eegdata_with_farray = {}
+    for ch in waveleted_eegdata_with_farray:
+        _normalized_tve_with_farray = normalized_tve_of_eegdata_with_farray[ch]
+        _plf_with_farray = plf_with_farray(_normalized_tve_with_farray, start_time_of_trials, offset, length, test)
+        _plf_of_eegdata_with_farray[ch] = _plf_with_farray
+    return _plf_of_eegdata_with_farray
 
-    plf_arr, p_arr = [[], []]
-    for f in farray:
-        _plf, _p = plf(signal, time_interval, f, start_time_of_trials, offset, length, debug)
-        plf_arr.append(_plf)
-        p_arr.append(_p)
-    return [plf_arr, p_arr]
+def save_plf(normalized_tve, start_time_of_trials, offset, length, filename,test=False):
+    _plf = plf(normalized_tve, start_time_of_trials, offset, length, test)
+    save_intermediate_data(filename, _plf)
+    return _plf
 
+def save_plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, filename, test=False):
+    _plf_with_farray = plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, test)
+    save_intermediate_data(filename, _plf_with_farray)
+    return _plf_with_farray
+
+def save_plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, filename, test=False):
+    _plf_of_eegdata_with_farray = plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, test)
+    save_intermediate_data(filename, _plf_of_eegdata_with_farray)
+    return _plf_of_eegdata_with_farray
+'''
 def show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p=False, save=False, filename='.plf.png'):
 
     _plf, _ps = plf_with_farray(sig,
@@ -186,3 +130,4 @@ def show_plf_spectgram_from_eeg(eeg_data, sig_name, trial_marker, farray, offset
     start_time_of_trials = [eeg_data.markers[i].position for i in range(len(eeg_data.markers)) if eeg_data.markers[i].description == trial_marker]
     time_interval = eeg_data.properties.sampling_interval / 1000000
     return show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p, save, filename)
+'''
