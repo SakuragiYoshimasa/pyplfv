@@ -68,6 +68,20 @@ def save_plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, s
     _plv_with_farray = plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length)
     save_intermediate_data(filename, _plv_with_farray)
     return _plv_with_farray
+
+def show_plv_with_farray(_plv_with_farray, filename=''):
+    _plvs = []
+    for f in _plv_with_farray:
+        _plvs.append(_plv_with_farray[f])
+    import matplotlib.pyplot as plt
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(_plvs, aspect='auto', vmin=0.0, vmax=1.0)
+    plt.colorbar(cax)
+    if filename != '':
+        plt.savefig(filename)
+    plt.show()
+
 '''
 def show_plv_bet_2ch(ch1, ch2, time_interval, start_time_of_trials, farray, offset, length, show_test=False, save=False, filename='Images/plv.png'):
 

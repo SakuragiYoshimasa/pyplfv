@@ -5,6 +5,7 @@ from pyplfv.tve import save_normalized_tve_with_farray
 from pyplfv.plv import save_plv_with_farray
 from pyplfv.utility import save_intermediate_data
 from pyplfv.utility import load_intermediate_data
+from pyplfv.plv import show_plv_with_farray
 
 trial_num = 100
 time_interval = 0.002
@@ -32,4 +33,4 @@ save_plv_with_farray(_waveleted_signal_with_farray_data1, _waveleted_signal_with
 
 # Load
 _plv = load_intermediate_data('./SampleData/simulation_data12_plv_wfa.pkl')
-print(_plv)
+show_plv_with_farray(_plv,'')
