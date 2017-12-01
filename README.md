@@ -37,6 +37,10 @@ print(eeg_data.markers)
 print(eeg_data.signals)
 ```
 
+### New Interface
+To save using memory, I revised interfaces using intermediate data.  
+Please look below and tests/* or ~example.  
+
 ### Phase-locking factor (PLF)
 
 Calculate Phase locking factor and nonparametric testing.  
@@ -51,35 +55,61 @@ There is an information about 'sig_name' in Appendix.
 show_plf_spectgram returns plf matrix and p values matrix which are type of numpy.array.  
 The p values are calculated to test whether an activity is significantly phase-locked to stimulus onset,  
 a statistical test (Rayleigh test) of uniformity of angle is used (Jervis et al., 1983)  
+Firstly, you need to transform original data to wavelet transformed signals.  
 
 ```Python
+import numpy as np
+import scipy.io as sio
+from pyplfv.data_structures import EEGData
+from pyplfv.wavelet import save_waveleted_signal
+from pyplfv.wavelet import save_waveleted_signal_with_farray
+from pyplfv.wavelet import save_waveleted_eegdata_with_farray
 
-from plf import show_plf_spectgram
-#def show_plf_spectgram_from_eeg(eeg_data, sig_name, trial_marker, farray, offset, length, show_p=False, save=False, filename='./plf.png'):
-plfs, ps = show_plf_spectgram(eeg_data, 'Cz', 'S255', [1.0 * i for i in range(20,101)], -500, 1500, True, True, 'Images/plf.png')
-
-```
-
-Other example,
-
-```Python
-matdata = sio.loadmat('SampleData/siulation_50Hz.mat')
+'''
+def save_waveleted_signal(signal, sampling_interval, f0, filename):
+def save_waveleted_signal_with_farray(signal, sampling_interval, farray, path):
+def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path):
+'''
+matdata = sio.loadmat('SampleData/simulation_data1.mat')
 trial_num = len(matdata['seg'][0])
 arr = np.array(matdata['seg'], dtype='float128')
 arr = arr.T
 sig = np.hstack([arr[i] for i in range(trial_num)])
 time_interval = 0.002
-farray = [1.0 * i for i in range(4,100)]
+farray = [1.0 * i for i in range(1,30)]
 start_time_of_trials = [750 * i for i in range(trial_num)]
 offset = 0
 length = int(1.5 / 0.002)
-
-from plf import show_plf_spectgram
-#def show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p=False, save=False, filename='.plf.png'):
-plfs, ps = show_plf_spectgram(sig, time_interval, start_time_of_trials, farray, offset, length, show_p=True)
-
+save_waveleted_signal_with_farray(signal=sig, sampling_interval=time_interval, farray=farray, path='./SampleData/simulationData1')
 ```
 
+Next, transform wavelet signals to normalized TVE or TVE.  
+
+```Python
+from pyplfv.tve import save_normalized_tve_with_farray
+from pyplfv.tve import save_tve_with_farray
+from pyplfv.tve import save_tve_of_eegdata_with_farray
+
+save_tve_with_farray(waveleted_path='SampleData/simulationData1')
+save_normalized_tve_with_farray(waveleted_path='SampleData/simulationData1')
+save_tve_of_eegdata_with_farray(waveleted_eegdata_path='SomeWaveletTransformedEEGDatapath')
+```
+
+Finaly, transform normalized tve to PLF.  
+
+
+```Python
+import numpy as np
+from pyplfv.plf import save_plf_with_farray
+
+#Save
+trial_num = 100
+farray = [1.0 * i for i in range(10,30)]
+start_time_of_trials = [750 * i for i in range(trial_num)]
+offset = 0
+length = int(1.5 / 0.002)
+save_plf_with_farray('SampleData/simulationData1', start_time_of_trials, offset, length)
+```
 <br>
 
 |         | Pseudo random added 10Hz gaussian | Pseudo random added 50Hz gaussian |  
@@ -105,6 +135,8 @@ Please see the document if you want more details.
 plv_bet_2ch returns plv matrix which is type of numpy.array.  
 When you want to get the plv about each situations, you can add parameters 'trial_filering' and 'trial_filter'.  
 If only you need is plv matrix, you can hide the heatmap by make show_mat=False.  
+Firstly, you need to transform original data to wavelet transformed signals like as above.  
+And next, you choose interface corresponding your data structures.  
 
 ```Python
 from data_structures import EEGData
