@@ -6,7 +6,7 @@ from pyplfv.utility import load_intermediate_data
 
 #Save
 
-#save_tve_with_farray(waveleted_path='SampleData/simulationData1')
+save_tve_with_farray(waveleted_path='SampleData/simulationData1')
 save_normalized_tve_with_farray(waveleted_path='SampleData/simulationData1')
 
 
