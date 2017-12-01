@@ -9,6 +9,7 @@ t := time-bin
 
 import numpy as np
 import random
+import glob
 from pyplfv.data_structures import EEGData
 from pyplfv.utility import load_intermediate_data
 from pyplfv.utility import save_intermediate_data
@@ -64,10 +65,35 @@ def save_plv(waveleted_ch1, waveleted_ch2, start_time_of_trials, offset, length,
     save_intermediate_data(filename, _plv)
     return _plv
 
-def save_plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length, filename):
-    _plv_with_farray = plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_time_of_trials, offset, length)
-    save_intermediate_data(filename, _plv_with_farray)
-    return _plv_with_farray
+def save_plv_with_farray(ch1_wav_path, ch2_wav_path, ch1_str, ch2_str, savepath, farray, start_time_of_trials, offset, length):
+
+    wav1_files = sorted(glob.glob(ch1_wav_path + '/wav*.pkl'))
+    wav2_files = sorted(glob.glob(ch2_wav_path + '/wav*.pkl'))
+    farray = sorted(farray)
+    if len(wav1_files) != len(wav2_files):
+        Exception('Please make same data size.')
+
+    for i in range(len(wav1_files)):
+        wav1 = load_intermediate_data(wav1_files[i])
+        wav2 = load_intermediate_data(wav2_files[i])
+        _plv = plv(wav1, wav2, start_time_of_trials, offset, length)
+        filename = savepath + '/plv_bet' + ch1_str + '_' + ch2_str + '_' + str(f).replace('.', '_') + '.pkl'
+        save_intermediate_data(filename, _plv)
+
+def save_plv_of_eegdata(wav_path, ch1_str, ch2_str, start_time_of_trials, offset, length, test=False):
+
+    wav1_files = sorted(glob.glob(wav_path + '/wav' + ch1_str + '*.pkl'))
+    wav2_files = sorted(glob.glob(wav_path + '/wav' + ch2_str + '*.pkl'))
+    farray = sorted(farray)
+    if len(wav1_files) != len(wav2_files):
+        Exception('Please make same data size.')
+
+    for i in range(len(wav1_files)):
+        wav1 = load_intermediate_data(wav1_files[i])
+        wav2 = load_intermediate_data(wav2_files[i])
+        _plv = plv(wav1, wav2, start_time_of_trials, offset, length)
+        filename = wav1_file.replace('wav' + ch1_str, 'plv_bet' + ch1_str + '_' + ch2_str)
+        save_intermediate_data(filename, _plv)
 
 def show_plv_with_farray(_plv_with_farray, filename=''):
     _plvs = []

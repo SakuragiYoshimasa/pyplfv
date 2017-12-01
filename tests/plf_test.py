@@ -11,7 +11,6 @@ offset = 0
 length = int(1.5 / 0.002)
 save_plf_with_farray('SampleData/simulationData1', start_time_of_trials, offset, length)
 
-
 #Load
 '''
 _plf_with_farray = load_intermediate_data('./SampleData/simulation_data1_plf_wfa.pkl')
