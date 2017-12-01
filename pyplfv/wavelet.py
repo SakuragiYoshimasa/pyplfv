@@ -43,23 +43,17 @@ def waveleted_signal_with_farray(signal, sampling_interval, farray):
 def save_waveleted_signal(signal, sampling_interval, f0, filename):
     waveleted = waveleted_signal(signal, sampling_interval, f0)
     save_intermediate_data(filename, waveleted)
-    return waveleted
 
-def save_waveleted_signal_with_farray(signal, sampling_interval, farray, filename):
-    _waveleted_signal_with_farray = waveleted_signal_with_farray(signal, sampling_interval, farray)
-    save_intermediate_data(filename, _waveleted_signal_with_farray)
-    return _waveleted_signal_with_farray
+def save_waveleted_signal_with_farray(signal, sampling_interval, farray, path):
+    for f in farray:
+        waveleted = waveleted_signal(signal, sampling_interval, f)
+        save_intermediate_data(path + '/wav' + str(f).replace('.', '_') + '.pkl', waveleted)
 
-def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filename):
+def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path):
 
     channels = eegdata.channel_names
-    waveleted_eeddata = {} # Key channel, value = dict(key=f, value=waveleted)
     for ch in channels:
-        waveleted_dict = {}
         signal = eegdata.signals[ch]
         for f in farray:
             waveleted = waveleted_signal(signal, sampling_interval, f)
-            waveleted_dict[str(f)] = waveleted
-        waveleted_eeddata[ch] = waveleted_dict
-    save_intermediate_data(filename, waveleted_eeddata)
-    return  waveleted_eeddata
+            save_intermediate_data(path + '/wav' + ch + '_' + str(f).replace('.', '_') + '.pkl', waveleted_eeddata)

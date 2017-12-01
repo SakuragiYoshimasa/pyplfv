@@ -2,6 +2,7 @@ import numpy as np
 from pyplfv.data_structures import EEGData
 from pyplfv.utility import load_intermediate_data
 from pyplfv.utility import save_intermediate_data
+import glob
 
 '''
 Time-varing energy[E(t,f0)] of the signal in a frequency band.
@@ -32,15 +33,19 @@ def save_tve(waveleted_signal, filename):
     save_intermediate_data(filename, _tve)
     return _tve
 
-def save_tve_with_farray(waveleted_signal_with_farray, filename):
-    _tve_with_farray = tve_with_farray(waveleted_signal_with_farray)
-    save_intermediate_data(filename, _tve_with_farray)
-    return _tve_with_farray
+def save_tve_with_farray(waveleted_path):
+    wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
+    for wav_file in wav_files:
+        waveleted = load_intermediate_data(wav_file)
+        _tve = tve(waveleted)
+        save_intermediate_data(wav_file.replace('wav', 'tve'), _tve)
 
-def save_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename):
-    _tve_of_eegdata_with_farray = tve_of_eegdata_with_farray(waveleted_eegdata_with_farray)
-    save_intermediate_data(filename, _tve_of_eegdata_with_farray)
-    return _tve_of_eegdata_with_farray
+def save_tve_of_eegdata_with_farray(waveleted_eegdata_path):
+    wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
+    for wav_file in wav_files:
+        waveleted = load_intermediate_data(wav_file)
+        _tve = tve(waveleted)
+        save_intermediate_data(wav_file.replace('wav', 'tve'), _tve)
 
 def show_tve_with_farray(_tve_with_farray, filename=''):
     _tves = []
@@ -79,12 +84,16 @@ def save_normalized_tve(waveleted_signal, filename):
     save_intermediate_data(filename, _normalized_tve)
     return _normalized_tve
 
-def save_normalized_tve_with_farray(waveleted_signal_with_farray, filename):
-    _normalized_tve_with_farray = normalized_tve_with_farray(waveleted_signal_with_farray)
-    save_intermediate_data(filename, _normalized_tve_with_farray)
-    return  _normalized_tve_with_farray
+def save_normalized_tve_with_farray(waveleted_path):
+    wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
+    for wav_file in wav_files:
+        waveleted = load_intermediate_data(wav_file)
+        _ntve = normalized_tve(waveleted)
+        save_intermediate_data(wav_file.replace('wav', 'ntve'), _ntve)
 
-def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename):
-    _normalized_tve_of_eegdata_with_farray = normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray)
-    save_intermediate_data(filename, _normalized_tve_of_eegdata_with_farray)
-    return _normalized_tve_of_eegdata_with_farray
+def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_path):
+    wav_files = sorted(glob.glob(waveleted_eegdata_path + '/wav*.pkl'))
+    for wav_file in wav_files:
+        waveleted = load_intermediate_data(wav_file)
+        _ntve = normalized_tve(waveleted)
+        save_intermediate_data(wav_file.replace('wav', 'ntve'), _ntve)
