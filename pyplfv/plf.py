@@ -93,8 +93,7 @@ def save_plf_of_eegdata_with_farray(ntve_path, start_time_of_trials, offset, len
         _ntve = load_intermediate_data(ntve_file)
         _plf = plf(_ntve, start_time_of_trials, offset, length, test)
         save_intermediate_data(ntve_file.replace('ntve', 'plf'), _plf)
-
-
+        
 def load_plf_with_farray(plf_path):
     plf_files = sorted(glob.glob(plf_path + '/plf*.pkl'))
     _plf_with_farray = [load_intermediate_data(plf_file) for plf_file in plf_files]
