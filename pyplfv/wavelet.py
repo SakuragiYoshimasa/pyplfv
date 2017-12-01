@@ -47,7 +47,7 @@ def save_waveleted_signal(signal, sampling_interval, f0, filename):
 def save_waveleted_signal_with_farray(signal, sampling_interval, farray, path):
     for f in farray:
         waveleted = waveleted_signal(signal, sampling_interval, f)
-        save_intermediate_data(path + '/wav' + str(f).replace('.', '_') + '.pkl', waveleted)
+        save_intermediate_data(path + '/wav' + str(f).rjust(6,'0').replace('.', '_') + '.pkl', waveleted)
 
 def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path):
 
@@ -56,4 +56,4 @@ def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path)
         signal = eegdata.signals[ch]
         for f in farray:
             waveleted = waveleted_signal(signal, sampling_interval, f)
-            save_intermediate_data(path + '/wav' + ch + '_' + str(f).replace('.', '_') + '.pkl', waveleted_eeddata)
+            save_intermediate_data(path + '/wav' + ch + '_' + str(f).rjust(6,'0').replace('.', '_') + '.pkl', waveleted_eeddata)

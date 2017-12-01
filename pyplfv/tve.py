@@ -60,6 +60,11 @@ def show_tve_with_farray(_tve_with_farray, filename=''):
         plt.savefig(filename)
     plt.show()
 
+def load_tve_with_farray(tve_path):
+    tve_files = sorted(glob.glob(tve_path + '/tve*.pkl'))
+    _tve_with_farray = [load_intermediate_data(tve_file) for tve_file in tve_files]
+    return _tve_with_farray
+
 '''
 Normalized complex Time-varing energy Pi(t,f0)
 '''
@@ -97,3 +102,8 @@ def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_path):
         waveleted = load_intermediate_data(wav_file)
         _ntve = normalized_tve(waveleted)
         save_intermediate_data(wav_file.replace('wav', 'ntve'), _ntve)
+
+def load_tve_with_farray(ntve_path):
+    ntve_files = sorted(glob.glob(ntve_path + '/ntve*.pkl'))
+    _ntve_with_farray = [load_intermediate_data(ntve_file) for ntve_file in ntve_files]
+    return _ntve_with_farray

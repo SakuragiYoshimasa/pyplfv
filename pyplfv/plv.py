@@ -70,6 +70,10 @@ def save_plv_with_farray(ch1_wav_path, ch2_wav_path, ch1_str, ch2_str, savepath,
     wav1_files = sorted(glob.glob(ch1_wav_path + '/wav*.pkl'))
     wav2_files = sorted(glob.glob(ch2_wav_path + '/wav*.pkl'))
     farray = sorted(farray)
+
+    print(wav1_files)
+    print(wav2_files)
+
     if len(wav1_files) != len(wav2_files):
         Exception('Please make same data size.')
 
@@ -77,7 +81,7 @@ def save_plv_with_farray(ch1_wav_path, ch2_wav_path, ch1_str, ch2_str, savepath,
         wav1 = load_intermediate_data(wav1_files[i])
         wav2 = load_intermediate_data(wav2_files[i])
         _plv = plv(wav1, wav2, start_time_of_trials, offset, length)
-        filename = savepath + '/plv_bet' + ch1_str + '_' + ch2_str + '_' + str(farray[i]).replace('.', '_') + '.pkl'
+        filename = savepath + '/plv_bet' + ch1_str + '_' + ch2_str + '_' + str(farray[i]).rjust(6,'0').replace('.', '_') + '.pkl'
         save_intermediate_data(filename, _plv)
 
 def save_plv_of_eegdata(wav_path, ch1_str, ch2_str, start_time_of_trials, offset, length, test=False):
@@ -88,17 +92,28 @@ def save_plv_of_eegdata(wav_path, ch1_str, ch2_str, start_time_of_trials, offset
     if len(wav1_files) != len(wav2_files):
         Exception('Please make same data size.')
 
+    print(wav1_files)
+    print(wav2_files)
     for i in range(len(wav1_files)):
         wav1 = load_intermediate_data(wav1_files[i])
         wav2 = load_intermediate_data(wav2_files[i])
         _plv = plv(wav1, wav2, start_time_of_trials, offset, length)
-        filename = wav1_file.replace('wav' + ch1_str, 'plv_bet' + ch1_str + '_' + ch2_str)
+        filename = wav1_file.replace('wav', 'plv_bet' + ch1_str + '_' + ch2_str)
         save_intermediate_data(filename, _plv)
+
+def load_plf_with_farray(plv_path, ch1_str, ch2_str):
+    plv_files = sorted(glob.glob(plv_path + '/plv_bet' + ch1_str + '_' + ch2_str + '*.pkl'))
+    print(plv_files)
+    _plv_with_farray = [load_intermediate_data(plv_file) for plv_file in plv_files]
+    return  _plv_with_farray
 
 def show_plv_with_farray(_plv_with_farray, filename=''):
     _plvs = []
-    for f in _plv_with_farray:
-        _plvs.append(_plv_with_farray[f])
+    if type(_plv_with_farray) == dict:
+        for f in _plv_with_farray:
+            _plvs.append(_plv_with_farray[f])
+    else:
+        _plvs = _plv_with_farray
     import matplotlib.pyplot as plt
     fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
