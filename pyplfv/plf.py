@@ -8,6 +8,7 @@ import numpy as np
 from pyplfv.data_structures import EEGData
 from pyplfv.utility import load_intermediate_data
 from pyplfv.utility import save_intermediate_data
+import glob
 
 '''
 To test whether an activity is significantly phase-locked to stimulus onset,
@@ -79,15 +80,19 @@ def save_plf(normalized_tve, start_time_of_trials, offset, length, filename,test
     save_intermediate_data(filename, _plf)
     return _plf
 
-def save_plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, filename, test=False):
-    _plf_with_farray = plf_with_farray(normalized_tve_with_farray, start_time_of_trials, offset, length, test)
-    save_intermediate_data(filename, _plf_with_farray)
-    return _plf_with_farray
+def save_plf_with_farray(ntve_path, start_time_of_trials, offset, length, test=False):
+    ntve_files = sorted(glob.glob(ntve_path + '/ntve*.pkl'))
+    for ntve_file in ntve_files:
+        _ntve = load_intermediate_data(ntve_file)
+        _plf = plf(_ntve, start_time_of_trials, offset, length, test)
+        save_intermediate_data(ntve_file.replace('ntve', 'plf'), _plf)
 
-def save_plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, filename, test=False):
-    _plf_of_eegdata_with_farray = plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length, test)
-    save_intermediate_data(filename, _plf_of_eegdata_with_farray)
-    return _plf_of_eegdata_with_farray
+def save_plf_of_eegdata_with_farray(ntve_path, start_time_of_trials, offset, length, test=False):
+    ntve_files = sorted(glob.glob(ntve_path + '/ntve*.pkl'))
+    for ntve_file in ntve_files:
+        _ntve = load_intermediate_data(ntve_file)
+        _plf = plf(_ntve, start_time_of_trials, offset, length, test)
+        save_intermediate_data(ntve_file.replace('ntve', 'plf'), _plf)
 
 def show_plf_with_farray(_plf_with_farray, filename=''):
     _plfs = []
