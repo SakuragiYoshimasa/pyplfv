@@ -15,19 +15,19 @@ save_waveleted_signal(signal=sig, sampling_interval=0.002, f0=2.0, filename='./S
 '''
 
 #Save
-'''
+
 matdata = sio.loadmat('SampleData/simulation_data1.mat')
 trial_num = len(matdata['seg'][0])
 arr = np.array(matdata['seg'], dtype='float128')
 arr = arr.T
 sig = np.hstack([arr[i] for i in range(trial_num)])
 time_interval = 0.002
-farray = [1.0 * i for i in range(10,30)]
+farray = [1.0 * i for i in range(1,30)]
 start_time_of_trials = [750 * i for i in range(trial_num)]
 offset = 0
 length = int(1.5 / 0.002)
-save_waveleted_signal_with_farray(signal=sig, sampling_interval=time_interval, farray=farray, filename='./SampleData/simulation_data1_wavelet_wfa.pkl')
-'''
+save_waveleted_signal_with_farray(signal=sig, sampling_interval=time_interval, farray=farray, path='./SampleData/simulationData1')
+
 
 #Load
 '''
