@@ -77,7 +77,7 @@ def save_plv_with_farray(ch1_wav_path, ch2_wav_path, ch1_str, ch2_str, savepath,
         wav1 = load_intermediate_data(wav1_files[i])
         wav2 = load_intermediate_data(wav2_files[i])
         _plv = plv(wav1, wav2, start_time_of_trials, offset, length)
-        filename = savepath + '/plv_bet' + ch1_str + '_' + ch2_str + '_' + str(f).replace('.', '_') + '.pkl'
+        filename = savepath + '/plv_bet' + ch1_str + '_' + ch2_str + '_' + str(farray[i]).replace('.', '_') + '.pkl'
         save_intermediate_data(filename, _plv)
 
 def save_plv_of_eegdata(wav_path, ch1_str, ch2_str, start_time_of_trials, offset, length, test=False):

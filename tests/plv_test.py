@@ -14,15 +14,7 @@ start_time_of_trials = [750 * i for i in range(trial_num)]
 offset = 0
 length = int(1.5 / 0.002)
 
-## Make 2 data
-'''
-for i in range(1, 3):
-    matdata = sio.loadmat('SampleData/simulation_data'+ str(i) + '.mat')
-    arr = np.array(matdata['seg'], dtype='float128')
-    arr = arr.T
-    sig = np.hstack([arr[i] for i in range(trial_num)])
-    save_waveleted_signal_with_farray(signal=sig, sampling_interval=time_interval, farray=farray, filename='./SampleData/simulation_data'+ str(i) +'_wavelet_wfa.pkl')
-'''
+save_plv_with_farray(ch1_wav_path='SampleData/simulationData1', ch2_wav_path='SampleData/simulationData2', ch1_str='sim1', ch2_str='sim2', savepath='SampleData/simulationPLV', farray=farray, start_time_of_trials=start_time_of_trials, offset=offset, length=length)
 
 #save
 '''
@@ -32,5 +24,5 @@ save_plv_with_farray(_waveleted_signal_with_farray_data1, _waveleted_signal_with
 '''
 
 # Load
-_plv = load_intermediate_data('./SampleData/simulation_data12_plv_wfa.pkl')
-show_plv_with_farray(_plv,'')
+#_plv = load_intermediate_data('./SampleData/simulation_data12_plv_wfa.pkl')
+#show_plv_with_farray(_plv,'')
