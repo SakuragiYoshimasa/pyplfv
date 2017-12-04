@@ -41,7 +41,7 @@ def save_tve_with_farray(waveleted_path):
         save_intermediate_data(wav_file.replace('wav', 'tve'), _tve)
 
 def save_tve_of_eegdata_with_farray(waveleted_eegdata_path):
-    wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
+    wav_files = sorted(glob.glob(waveleted_eegdata_path + '/wav*.pkl'))
     for wav_file in wav_files:
         waveleted = load_intermediate_data(wav_file)
         _tve = tve(waveleted)
