@@ -3,7 +3,6 @@ from pyplfv.data_structures import EEGData
 from pyplfv.utility import load_intermediate_data
 from pyplfv.utility import save_intermediate_data
 import glob
-import pyplfv.sampling_slice
 
 '''
 Time-varing energy[E(t,f0)] of the signal in a frequency band.
