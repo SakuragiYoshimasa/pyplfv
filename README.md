@@ -21,6 +21,8 @@ cat files.txt | xargs rm -rf
 - pandas
 - scipy
 - matplotlib
+- pickle
+- glob
 
 ## Usages
 

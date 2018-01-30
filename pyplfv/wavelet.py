@@ -6,20 +6,19 @@ from pyplfv.utility import save_intermediate_data
 
 '''
 Wavelet and parameters of that.
+w = wave count
 '''
-def gen_parameters(f, debug=False):
+def gen_parameters(f, w=10.0):
     '''
     Constant ratio f0/sigma_f = 10
     sigma_f = 1.0 / (2.0 * pi * sigma_f)
     wavelet duration = 2 * sigma_t
     normaliation factor:A = (sigma_t * sqrt(pi))^(-1/2)
     '''
-    sigma_f = np.float128(f / 10.0)
-    sigma_t = np.float128(10.0 / (2.0 * np.pi * f))
+    sigma_f = np.float128(f / w)
+    sigma_t = np.float128(w / (2.0 * np.pi * f))
     wavelet_duration =  np.float128(2.0 * sigma_t)
     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
-    if debug:
-        print('wavelet_duration %.6f, A: %.6f, sigma_f %.6f' % (wavelet_duration, A, sigma_f))
     return  [sigma_f, sigma_t, wavelet_duration, A]
 
 def morlet_wavelet(t, f, sigma_f, sigma_t, wavelet_duration, A):
@@ -34,26 +33,17 @@ def waveleted_signal(signal, sampling_interval, f0):
     return waveleted
 
 def waveleted_signal_with_farray(signal, sampling_interval, farray):
-    waveleted_dict = {}
-    for f in farray:
-        waveleted = waveleted_signal(signal, sampling_interval, f)
-        waveleted_dict[str(f)] = waveleted
-    return waveleted_dict
+    return {str(f) : waveleted_signal(signal, sampling_interval, f) for f in farray}
 
 def save_waveleted_signal(signal, sampling_interval, f0, filename):
     waveleted = waveleted_signal(signal, sampling_interval, f0)
     save_intermediate_data(filename, waveleted)
 
 def save_waveleted_signal_with_farray(signal, sampling_interval, farray, path):
-    for f in farray:
-        waveleted = waveleted_signal(signal, sampling_interval, f)
-        save_intermediate_data(path + '/wav' + str(f).rjust(6,'0').replace('.', '_') + '.pkl', waveleted)
+    waveleted = waveleted_signal_with_farray(signal, sampling_interval, farray)
+    save_intermediate_data(path + '/wav_with_farray.pkl', waveleted)
 
 def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path):
-
     channels = eegdata.channel_names
-    for ch in channels:
-        signal = eegdata.signals[ch]
-        for f in farray:
-            waveleted = waveleted_signal(signal, sampling_interval, f)
-            save_intermediate_data(path + '/wav' + ch + '_' + str(f).rjust(6,'0').replace('.', '_') + '.pkl', waveleted)
+    waveleted = {ch : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f) for f in farray } for ch in channels}
+    save_intermediate_data(path + '/wav_eeg_with_farray.pkl', waveleted)
