@@ -35,8 +35,8 @@ def waveleted_signal(signal, sampling_interval, f0, sampling_slice=1):
 def waveleted_signal_with_farray(signal, sampling_interval, farray, sampling_slice=1):
     return {str(f) : waveleted_signal(signal, sampling_interval, f, sampling_slice) for f in farray}
 
-def save_waveleted_signal(signal, sampling_interval, f0, filename, sampling_slice=1):
-    waveleted = waveleted_signal(signal, sampling_interval, f0, sampling_slice)
+def save_waveleted_signal(signal, sampling_interval, f, filename, sampling_slice=1):
+    waveleted = waveleted_signal(signal, sampling_interval, f, sampling_slice)
     save_data(filename, waveleted)
     return
 
@@ -48,5 +48,5 @@ def save_waveleted_signal_with_farray(signal, sampling_interval, farray, filenam
 def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filename, sampling_slice=1):
     channels = eegdata.channel_names
     waveleted = {ch : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f, sampling_slice) for f in farray } for ch in channels}
-    save_data(filename, waveleted[::sampling_slice])
+    save_data(filename, waveleted)
     return
