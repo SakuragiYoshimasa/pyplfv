@@ -26,18 +26,13 @@ def save_tve(waveleted_signal, filename, sampling_slice=1):
     save_intermediate_data(filename, tve(waveleted_signal[::sampling_slice]))
     return
 
-def save_tve_with_farray(waveleted_path, sampling_slice=1):
-    wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
-    for wav_file in wav_files:
-        waveleted = load_intermediate_data(wav_file)
-        save_intermediate_data(wav_file.replace('wav', 'tve'), tve(waveleted[::sampling_slice]))
+def save_tve_with_farray(waveleted_signal_with_farray, filename, sampling_slice=1):
+    save_intermediate_data(filename, tve_with_farray(waveleted_signal_with_farray)[::sampling_slice])
+    return
 
-def save_tve_of_eegdata_with_farray(waveleted_eegdata_path, sampling_slice=1):
-    wav_files = sorted(glob.glob(waveleted_eegdata_path + '/wav*.pkl'))
-    for wav_file in wav_files:
-        waveleted = load_intermediate_data(wav_file)
-        _tve = tve(waveleted[::sampling_slice])
-        save_intermediate_data(wav_file.replace('wav', 'tve'), _tve)
+def save_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename, sampling_slice=1):
+    save_intermediate_data(filename, tve_of_eegdata_with_farray(waveleted_eegdata_with_farray)[::sampling_slice])
+    return
 
 def show_tve_with_farray(_tve_with_farray, filename=''):
     _tves = []
@@ -51,12 +46,6 @@ def show_tve_with_farray(_tve_with_farray, filename=''):
     if filename != '':
         plt.savefig(filename)
     plt.show()
-
-def load_tve_with_farray(tve_path):
-    tve_files = sorted(glob.glob(tve_path + '/tve*.pkl'))
-    _tve_with_farray = [load_intermediate_data(tve_file) for tve_file in tve_files]
-    return _tve_with_farray
-
 '''
 Normalized complex Time-varing energy Pi(t,f0)
 '''

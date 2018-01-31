@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.io as sio
 from pyplfv.data_structures import EEGData
-from pyplfv.utility import load_intermediate_data
-from pyplfv.utility import save_intermediate_data
+from pyplfv.utility import load_data
+from pyplfv.utility import save_data
 
 '''
 Wavelet and parameters of that.
@@ -19,7 +19,7 @@ def gen_parameters(f, w=10.0):
     sigma_t = np.float128(w / (2.0 * np.pi * f))
     wavelet_duration =  np.float128(2.0 * sigma_t)
     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
-    return  [sigma_f, sigma_t, wavelet_duration, A]
+    return [sigma_f, sigma_t, wavelet_duration, A]
 
 def morlet_wavelet(t, f, sigma_f, sigma_t, wavelet_duration, A):
     time_domain = np.exp(- np.power(t, 2.0) / (2.0 * np.power(sigma_t, 2.0)))
@@ -37,13 +37,16 @@ def waveleted_signal_with_farray(signal, sampling_interval, farray):
 
 def save_waveleted_signal(signal, sampling_interval, f0, filename, sampling_slice=1):
     waveleted = waveleted_signal(signal, sampling_interval, f0)
-    save_intermediate_data(filename, waveleted[::sampling_slice])
+    save_data(filename, waveleted[::sampling_slice])
+    return
 
 def save_waveleted_signal_with_farray(signal, sampling_interval, farray, filename, sampling_slice=1):
     waveleted = waveleted_signal_with_farray(signal, sampling_interval, farray)
-    save_intermediate_data(filename, waveleted[::sampling_slice])
+    save_data(filename, waveleted[::sampling_slice])
+    return
 
 def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filename, sampling_slice=1):
     channels = eegdata.channel_names
     waveleted = {ch : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f) for f in farray } for ch in channels}
-    save_intermediate_data(filename, waveleted[::sampling_slice])
+    save_data(filename, waveleted[::sampling_slice])
+    return
