@@ -17,28 +17,20 @@ def tve(waveleted_signal):
     return _tve
 
 def tve_with_farray(waveleted_signal_with_farray):
-    _tve_with_farray = {}
-    for f in waveleted_signal_with_farray:
-        _tve_with_farray[f] = tve(waveleted_signal_with_farray[f])
-    return _tve_with_farray
+    return { f : tve(waveleted_signal_with_farray[f]) for f in waveleted_signal_with_farray.keys()}
 
 def tve_of_eegdata_with_farray(waveleted_eegdata_with_farray):
-    _tve_of_eegdata_with_farray = {}
-    for ch in waveleted_eegdata_with_farray:
-        _tve_of_eegdata_with_farray[ch] = tve_with_farray(waveleted_eegdata_with_farray[ch])
-    return _tve_of_eegdata_with_farray
+    return { ch : tve_with_farray(waveleted_eegdata_with_farray[ch]) for ch in waveleted_eegdata_with_farray.keys()}
 
 def save_tve(waveleted_signal, filename, sampling_slice=1):
-    _tve = tve(waveleted_signal[::sampling_slice])
-    save_intermediate_data(filename, _tve)
-    return _tve
+    save_intermediate_data(filename, tve(waveleted_signal[::sampling_slice]))
+    return
 
 def save_tve_with_farray(waveleted_path, sampling_slice=1):
     wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
     for wav_file in wav_files:
         waveleted = load_intermediate_data(wav_file)
-        _tve = tve(waveleted[::sampling_slice])
-        save_intermediate_data(wav_file.replace('wav', 'tve'), _tve)
+        save_intermediate_data(wav_file.replace('wav', 'tve'), tve(waveleted[::sampling_slice]))
 
 def save_tve_of_eegdata_with_farray(waveleted_eegdata_path, sampling_slice=1):
     wav_files = sorted(glob.glob(waveleted_eegdata_path + '/wav*.pkl'))

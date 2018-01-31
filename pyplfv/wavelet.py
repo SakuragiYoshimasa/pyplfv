@@ -35,15 +35,15 @@ def waveleted_signal(signal, sampling_interval, f0):
 def waveleted_signal_with_farray(signal, sampling_interval, farray):
     return {str(f) : waveleted_signal(signal, sampling_interval, f) for f in farray}
 
-def save_waveleted_signal(signal, sampling_interval, f0, filename):
+def save_waveleted_signal(signal, sampling_interval, f0, filename, sampling_slice=1):
     waveleted = waveleted_signal(signal, sampling_interval, f0)
-    save_intermediate_data(filename, waveleted)
+    save_intermediate_data(filename, waveleted[::sampling_slice])
 
-def save_waveleted_signal_with_farray(signal, sampling_interval, farray, path):
+def save_waveleted_signal_with_farray(signal, sampling_interval, farray, path, sampling_slice=1):
     waveleted = waveleted_signal_with_farray(signal, sampling_interval, farray)
-    save_intermediate_data(path + '/wav_with_farray.pkl', waveleted)
+    save_intermediate_data(path + '/wav_with_farray.pkl', waveleted[::sampling_slice])
 
-def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path):
+def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, path, sampling_slice=1):
     channels = eegdata.channel_names
     waveleted = {ch : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f) for f in farray } for ch in channels}
-    save_intermediate_data(path + '/wav_eeg_with_farray.pkl', waveleted)
+    save_intermediate_data(path + '/wav_eeg_with_farray.pkl', waveleted[::sampling_slice])
