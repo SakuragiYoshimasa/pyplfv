@@ -1,7 +1,7 @@
 import numpy as np
 from pyplfv.data_structures import EEGData
-from pyplfv.utility import load_intermediate_data
-from pyplfv.utility import save_intermediate_data
+from pyplfv.utility import load_data
+from pyplfv.utility import save_data
 import glob
 
 '''
@@ -13,8 +13,7 @@ f0: the central frequency [Hz]
 '''
 
 def tve(waveleted_signal):
-    _tve = np.power(np.abs(waveleted_signal), 2.0)
-    return _tve
+    return np.power(np.abs(waveleted_signal), 2.0)
 
 def tve_with_farray(waveleted_signal_with_farray):
     return { f : tve(waveleted_signal_with_farray[f]) for f in waveleted_signal_with_farray.keys()}
@@ -23,15 +22,15 @@ def tve_of_eegdata_with_farray(waveleted_eegdata_with_farray):
     return { ch : tve_with_farray(waveleted_eegdata_with_farray[ch]) for ch in waveleted_eegdata_with_farray.keys()}
 
 def save_tve(waveleted_signal, filename, sampling_slice=1):
-    save_intermediate_data(filename, tve(waveleted_signal[::sampling_slice]))
+    save_data(filename, tve(waveleted_signal[::sampling_slice]))
     return
 
 def save_tve_with_farray(waveleted_signal_with_farray, filename, sampling_slice=1):
-    save_intermediate_data(filename, tve_with_farray(waveleted_signal_with_farray)[::sampling_slice])
+    save_data(filename, tve_with_farray(waveleted_signal_with_farray)[::sampling_slice])
     return
 
 def save_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename, sampling_slice=1):
-    save_intermediate_data(filename, tve_of_eegdata_with_farray(waveleted_eegdata_with_farray)[::sampling_slice])
+    save_data(filename, tve_of_eegdata_with_farray(waveleted_eegdata_with_farray)[::sampling_slice])
     return
 
 def show_tve_with_farray(_tve_with_farray, filename=''):
@@ -50,41 +49,25 @@ def show_tve_with_farray(_tve_with_farray, filename=''):
 Normalized complex Time-varing energy Pi(t,f0)
 '''
 def normalized_tve(waveleted_signal):
-    _normalized_tve = waveleted_signal / np.abs(waveleted_signal)
-    return _normalized_tve
+    return waveleted_signal / np.abs(waveleted_signal)
 
 def normalized_tve_with_farray(waveleted_signal_with_farray):
-    _normalized_tve_with_farray = {}
-    for f in waveleted_signal_with_farray:
-        _normalized_tve_with_farray[f] = normalized_tve(waveleted_signal_with_farray[f])
-    return _normalized_tve_with_farray
+    return { f : normalized_tve(waveleted_signal_with_farray[f]) for f in waveleted_signal_with_farray.keys() }
 
 def normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray):
-    _normalized_tve_of_eegdata_with_farray = {}
-    for ch in waveleted_eegdata_with_farray:
-        _normalized_tve_of_eegdata_with_farray[ch] = normalized_tve_with_farray(waveleted_eegdata_with_farray[ch])
-    return _normalized_tve_of_eegdata_with_farray
+    return { ch : normalized_tve_with_farray(waveleted_eegdata_with_farray[ch]) for ch in waveleted_eegdata_with_farray.keys() }
 
 def save_normalized_tve(waveleted_signal, filename, sampling_slice=1):
-    _normalized_tve = normalized_tve(waveleted_signal[::sampling_slice])
-    save_intermediate_data(filename, _normalized_tve)
-    return _normalized_tve
+    save_data(filename, normalized_tve(waveleted_signal[::sampling_slice]))
+    return
 
-def save_normalized_tve_with_farray(waveleted_path, sampling_slice=1):
-    wav_files = sorted(glob.glob(waveleted_path + '/wav*.pkl'))
-    for wav_file in wav_files:
-        waveleted = load_intermediate_data(wav_file)
-        _ntve = normalized_tve(waveleted[::sampling_slice])
-        save_intermediate_data(wav_file.replace('wav', 'ntve'), _ntve)
+def save_normalized_tve_with_farray(waveleted_signal_with_farray, filename, sampling_slice=1):
+    save_data(filename, normalized_tve_with_farray(waveleted_signal_with_farray))
+    return
 
-def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_path, sampling_slice=1):
+def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename, sampling_slice=1):
     wav_files = sorted(glob.glob(waveleted_eegdata_path + '/wav*.pkl'))
     for wav_file in wav_files:
         waveleted = load_intermediate_data(wav_file)
         _ntve = normalized_tve(waveleted[::sampling_slice])
         save_intermediate_data(wav_file.replace('wav', 'ntve'), _ntve)
-
-def load_tve_with_farray(ntve_path):
-    ntve_files = sorted(glob.glob(ntve_path + '/ntve*.pkl'))
-    _ntve_with_farray = [load_intermediate_data(ntve_file) for ntve_file in ntve_files]
-    return _ntve_with_farray
