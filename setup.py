@@ -36,7 +36,7 @@ setup(
     install_requires=['numpy', 'matplotlib'],
     url='https://github.com/SakuragiYoshimasa/pyplfv',
     license=license,
-    packages=['pyplfv'],
+    #packages=['pyplfv'],
     ext_modules=ext_modules,
     test_suite='tests',
     cmdclass={'build_ext': build_ext}

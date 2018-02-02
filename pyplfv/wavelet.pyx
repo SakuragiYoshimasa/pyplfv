@@ -49,3 +49,10 @@ def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filen
     waveleted = { str(ch) : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f, sampling_slice) for f in farray } for ch in channels}
     save_data(filename, waveleted)
     return
+    
+def speedCheck():
+  res = 0
+  for i in range(1000):
+    for j in range(1000):
+      res = res + i + j
+  return res
