@@ -6,6 +6,9 @@ import numpy
 import scipy
 
 ext_modules = [
+    Extension('pyplfv.data_structures',
+              sources=['pyplfv/data_structures.pyx'],
+              include_dirs=[numpy.get_include(), scipy.get_include()]),
     Extension('pyplfv.utility',
               sources=['pyplfv/utility.pyx'],
               include_dirs=[numpy.get_include(), scipy.get_include()]),
