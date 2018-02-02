@@ -33,18 +33,6 @@ def save_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename, sam
     save_data(filename, tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, sampling_slice))
     return
 
-def show_tve_with_farray(_tve_with_farray, filename=''):
-    _tves = []
-    for f in _tve_with_farray:
-        _tves.append(_tve_with_farray[f])
-    import matplotlib.pyplot as plt
-    fig = plt.figure(figsize=(20,10))
-    ax = fig.add_subplot(111)
-    cax = ax.matshow(_tves, aspect='auto', vmin=0.0, vmax=1.0)
-    plt.colorbar(cax)
-    if filename != '':
-        plt.savefig(filename)
-    plt.show()
 '''
 Normalized complex Time-varing energy Pi(t,f0)
 '''
@@ -68,3 +56,16 @@ def save_normalized_tve_with_farray(waveleted_signal_with_farray, filename, samp
 def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename, sampling_slice=1):
     save_data(filename, normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, sampling_slice))
     return
+
+def show_tve_with_farray(_tve_with_farray, vmin=0.0, vmax=1.0, filename=''):
+    _tves = []
+    for f in _tve_with_farray:
+        _tves.append(_tve_with_farray[f])
+    import matplotlib.pyplot as plt
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(_tves, aspect='auto', vmin=vmin, vmax=vmax)
+    plt.colorbar(cax)
+    if filename != '':
+        plt.savefig(filename)
+    plt.show()
