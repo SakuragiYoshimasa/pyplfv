@@ -1,5 +1,4 @@
 import numpy as np
-import scipy.io as sio
 from pyplfv.data_structures import EEGData
 from pyplfv.utility import load_data
 from pyplfv.utility import save_data

@@ -18,11 +18,7 @@ cat files.txt | xargs rm -rf
 
 ### Dependency
 - numpy
-- pandas
-- scipy
-- matplotlib
-- pickle
-- glob
+- scypy
 
 ## Usages
 

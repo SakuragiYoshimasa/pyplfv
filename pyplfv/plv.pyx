@@ -58,7 +58,7 @@ def save_plv(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length
 def save_plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length, filename):
     save_data(filename, plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length))
     return
-
+'''
 def show_plv_with_farray(_plv_with_farray, filename=''):
     _plvs = []
     if type(_plv_with_farray) == dict:
@@ -74,3 +74,4 @@ def show_plv_with_farray(_plv_with_farray, filename=''):
     if filename != '':
         plt.savefig(filename)
     plt.show()
+'''

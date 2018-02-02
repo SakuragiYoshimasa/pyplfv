@@ -59,10 +59,10 @@ def save_plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offs
     save_data(filename, plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length))
     return
 
-def save_plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length):
+def save_plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length, filename):
     save_data(filename, plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length))
     return
-
+'''
 def show_plf_with_farray(_plf_with_farray, filename=''):
     _plfs = []
     if type(_plf_with_farray) == dict:
@@ -79,3 +79,4 @@ def show_plf_with_farray(_plf_with_farray, filename=''):
     if filename != '':
         plt.savefig(filename)
     plt.show()
+'''

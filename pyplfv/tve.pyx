@@ -56,7 +56,7 @@ def save_normalized_tve_with_farray(waveleted_signal_with_farray, filename, samp
 def save_normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, filename, sampling_slice=1):
     save_data(filename, normalized_tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, sampling_slice))
     return
-
+'''
 def show_tve_with_farray(_tve_with_farray, vmin=0.0, vmax=1.0, filename=''):
     _tves = []
     for f in _tve_with_farray:
@@ -69,3 +69,4 @@ def show_tve_with_farray(_tve_with_farray, vmin=0.0, vmax=1.0, filename=''):
     if filename != '':
         plt.savefig(filename)
     plt.show()
+'''
