@@ -1,11 +1,10 @@
 import numpy as np
 import scipy.io as sio
 from pyplfv.data_structures import EEGData
-from pyplfv.wavelet import save_waveleted_signal
-from pyplfv.wavelet import save_waveleted_signal_with_farray
-from pyplfv.wavelet import save_waveleted_eegdata_with_farray
-from pyplfv.utility import save_intermediate_data
-from pyplfv.utility import load_intermediate_data
+from pyplfv.wavelet import waveleted_signal_with_farray
+from pyplfv.tve import normalized_tve_with_farray
+from pyplfv.utility import save_data
+from pyplfv.utility import load_data
 '''
 eeg_data = EEGData('./SampleData/sample.mat')
 sig = eeg_data.signals['Cz']
@@ -26,8 +25,14 @@ farray = [1.0 * i for i in range(1,30)]
 start_time_of_trials = [750 * i for i in range(trial_num)]
 offset = 0
 length = int(1.5 / 0.002)
-save_waveleted_signal_with_farray(signal=sig, sampling_interval=time_interval, farray=farray, path='./SampleData/simulationData1')
+import time
 
+print(len(sig))
+t = time.time()
+w = waveleted_signal_with_farray(signal=sig, sampling_interval=time_interval, farray=farray)
+ntve = normalized_tve_with_farray(w)
+t = time.time() - t
+print(t)
 
 #Load
 '''
