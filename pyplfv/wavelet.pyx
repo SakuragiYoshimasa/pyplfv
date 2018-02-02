@@ -7,7 +7,7 @@ from pyplfv.utility import save_data
 Wavelet and parameters of that.
 w = wave count
 '''
-def gen_parameters(f, w=10.0):
+def gen_parameters(double f, double w=10.0):
     '''
     Constant ratio f0/sigma_f = 10
     sigma_f = 1.0 / (2.0 * pi * sigma_f)
@@ -20,7 +20,7 @@ def gen_parameters(f, w=10.0):
     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
     return [sigma_f, sigma_t, wavelet_duration, A]
 
-def morlet_wavelet(t, f, sigma_f, sigma_t, wavelet_duration, A):
+def morlet_wavelet(double t, double f, double sigma_f, double sigma_t, double wavelet_duration, double A):
     time_domain = np.exp(- np.power(t, 2.0) / (2.0 * np.power(sigma_t, 2.0)))
     freq_domain = np.exp(-2.0j * np.pi * f * t)
     return A * time_domain * freq_domain
@@ -49,10 +49,3 @@ def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filen
     waveleted = { str(ch) : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f, sampling_slice) for f in farray } for ch in channels}
     save_data(filename, waveleted)
     return
-    
-def speedCheck():
-  res = 0
-  for i in range(1000):
-    for j in range(1000):
-      res = res + i + j
-  return res
