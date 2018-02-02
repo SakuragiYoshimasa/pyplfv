@@ -6,8 +6,8 @@ Please see the document if you want more details.
 
 import numpy as np
 from pyplfv.data_structures import EEGData
-from pyplfv.utility import load_intermediate_data
-from pyplfv.utility import save_intermediate_data
+from pyplfv.utility import load_data
+from pyplfv.utility import save_data
 import glob
 
 '''
@@ -46,21 +46,21 @@ def plf(normalized_tve, start_frame_of_trials, offset, length):
     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
 
 def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):
-    return { f : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+    return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
 
 def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):
-    return { ch : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}
+    return { str(ch) : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}
 
 def save_plf(normalized_tve, start_frame_of_trials, offset, length, filename):
-    save_intermediate_data(filename, plf(normalized_tve, start_frame_of_trials, offset, length))
+    save_data(filename, plf(normalized_tve, start_frame_of_trials, offset, length))
     return
 
 def save_plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length, filename):
-    save_intermediate_data(filename, plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length))
+    save_data(filename, plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length))
     return
 
 def save_plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_time_of_trials, offset, length):
-    save_intermediate_data(filename, plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length))
+    save_data(filename, plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length))
     return
 
 def show_plf_with_farray(_plf_with_farray, filename=''):

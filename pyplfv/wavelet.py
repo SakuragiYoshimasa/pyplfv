@@ -47,6 +47,6 @@ def save_waveleted_signal_with_farray(signal, sampling_interval, farray, filenam
 
 def save_waveleted_eegdata_with_farray(eegdata, sampling_interval, farray, filename, sampling_slice=1):
     channels = eegdata.channel_names
-    waveleted = {ch : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f, sampling_slice) for f in farray } for ch in channels}
+    waveleted = { str(ch) : {str(f): waveleted_signal(eegdata.signals[ch], sampling_interval, f, sampling_slice) for f in farray } for ch in channels}
     save_data(filename, waveleted)
     return

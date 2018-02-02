@@ -16,10 +16,10 @@ def tve(waveleted_signal, sampling_slice=1):
     return np.power(np.abs(waveleted_signal), 2.0)[::sampling_slice]
 
 def tve_with_farray(waveleted_signal_with_farray, sampling_slice=1):
-    return { f : tve(waveleted_signal_with_farray[f], sampling_slice) for f in waveleted_signal_with_farray.keys()}
+    return { str(f) : tve(waveleted_signal_with_farray[f], sampling_slice) for f in waveleted_signal_with_farray.keys()}
 
 def tve_of_eegdata_with_farray(waveleted_eegdata_with_farray, sampling_slice=1):
-    return { ch : tve_with_farray(waveleted_eegdata_with_farray[ch], sampling_slice) for ch in waveleted_eegdata_with_farray.keys()}
+    return { str(ch) : tve_with_farray(waveleted_eegdata_with_farray[ch], sampling_slice) for ch in waveleted_eegdata_with_farray.keys()}
 
 def save_tve(waveleted_signal, filename, sampling_slice=1):
     save_data(filename, tve(waveleted_signal, sampling_slice))
