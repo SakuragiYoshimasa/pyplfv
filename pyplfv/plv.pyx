@@ -15,34 +15,21 @@ from pyplfv.utility import load_data
 from pyplfv.utility import save_data
 
 '''
-Phase-locking statistics(PLS)
-'''
-'''
-def cacl_pls(plv, phai1_tn_arr, phai2_tn_arr):
-    random.shuffle(phai2_tn_arr) # make surrogate data
-    N = len(phai1_tn_arr)
-    length = len(phai1_tn_arr[0])
-    surr_plv = np.zeros(length, dtype='complex128')
-    for i in range(N):
-        surr_phai_tn = phai1_tn_arr[i] - phai2_tn_arr[i]
-        surr_plv += np.exp(np.array([complex(0, surr_phai_tn[i]) for i in range(length)])) / N
-    surr_plv = np.abs(surr_plv)
-    return surr_plv / plv
-'''
-'''
 PLV
 '''
 #return phai(t,n)
 def calc_phai(waveleted_signal):
     return np.angle(waveleted_signal)
-
+    
 def plv(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length):
     trial_num = len(start_frame_of_trials)
     _plv = np.zeros(length, dtype='complex128')
     for n in range(trial_num):
+        start = time.time()
         trial = start_frame_of_trials[n]
         phai1_tn = calc_phai(waveleted_ch1[trial + offset : trial + offset + length])
         phai2_tn = calc_phai(waveleted_ch2[trial + offset : trial + offset + length])
+        et = time.time() - start
         phai_tn = phai1_tn - phai2_tn
         _plv = _plv + np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)]))
     _plv = np.abs(_plv) / float(trial_num)
@@ -58,6 +45,23 @@ def save_plv(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length
 def save_plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length, filename):
     save_data(filename, plv_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length))
     return
+
+'''
+Phase-locking statistics(PLS)
+'''
+'''
+def cacl_pls(plv, phai1_tn_arr, phai2_tn_arr):
+        random.shuffle(phai2_tn_arr) # make surrogate data
+        N = len(phai1_tn_arr)
+        length = len(phai1_tn_arr[0])
+        surr_plv = np.zeros(length, dtype='complex128')
+        for i in range(N):
+            surr_phai_tn = phai1_tn_arr[i] - phai2_tn_arr[i]
+            surr_plv += np.exp(np.array([complex(0, surr_phai_tn[i]) for i in range(length)])) / N
+        surr_plv = np.abs(surr_plv)
+        return surr_plv / plv
+'''
+
 '''
 def show_plv_with_farray(_plv_with_farray, filename=''):
     _plvs = []
