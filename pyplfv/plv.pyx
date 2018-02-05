@@ -20,16 +20,14 @@ PLV
 #return phai(t,n)
 def calc_phai(waveleted_signal):
     return np.angle(waveleted_signal)
-    
+
 def plv(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length):
     trial_num = len(start_frame_of_trials)
     _plv = np.zeros(length, dtype='complex128')
     for n in range(trial_num):
-        start = time.time()
         trial = start_frame_of_trials[n]
         phai1_tn = calc_phai(waveleted_ch1[trial + offset : trial + offset + length])
         phai2_tn = calc_phai(waveleted_ch2[trial + offset : trial + offset + length])
-        et = time.time() - start
         phai_tn = phai1_tn - phai2_tn
         _plv = _plv + np.exp(np.array([complex(0, phai_tn[i]) for i in range(length)]))
     _plv = np.abs(_plv) / float(trial_num)
