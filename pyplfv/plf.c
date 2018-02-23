@@ -940,7 +940,7 @@ static PyObject *__pyx_float_24_0;
 static PyObject *__pyx_float_76_0;
 static PyObject *__pyx_float_132_0;
 static PyObject *__pyx_float_288_0;
-static PyObject *__pyx_int_1;
+static PyObject *__pyx_int_0;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__5;
@@ -1458,7 +1458,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_rayleigh_p(CYTHON_UNUSED PyObject *__pyx_
  * 
  * def plf(normalized_tve, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  */
 
 /* Python wrapper */
@@ -1557,7 +1557,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_2plf(CYTHON_UNUSED PyObject *__pyx_self, 
  * 
  * def plf(normalized_tve, start_frame_of_trials, offset, length):
  *     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]             # <<<<<<<<<<<<<<
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  * 
  */
   __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
@@ -1624,7 +1624,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_2plf(CYTHON_UNUSED PyObject *__pyx_self, 
   /* "pyplfv/plf.pyx":46
  * def plf(normalized_tve, start_frame_of_trials, offset, length):
  *     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))             # <<<<<<<<<<<<<<
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))             # <<<<<<<<<<<<<<
  * 
  * def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):
  */
@@ -1646,7 +1646,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_2plf(CYTHON_UNUSED PyObject *__pyx_self, 
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_normalized_tve_within_trials);
   __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_axis, __pyx_int_1) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
   __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -1707,7 +1707,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_2plf(CYTHON_UNUSED PyObject *__pyx_self, 
  * 
  * def plf(normalized_tve, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  */
 
   /* function exit code */
@@ -1729,10 +1729,10 @@ static PyObject *__pyx_pf_6pyplfv_3plf_2plf(CYTHON_UNUSED PyObject *__pyx_self, 
 }
 
 /* "pyplfv/plf.pyx":48
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  * 
  * def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  */
 
@@ -1824,14 +1824,15 @@ static PyObject *__pyx_pf_6pyplfv_3plf_4plf_with_farray(CYTHON_UNUSED PyObject *
   PyObject *(*__pyx_t_6)(PyObject *);
   PyObject *__pyx_t_7 = NULL;
   PyObject *__pyx_t_8 = NULL;
-  int __pyx_t_9;
-  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
   __Pyx_RefNannySetupContext("plf_with_farray", 0);
 
   /* "pyplfv/plf.pyx":49
  * 
  * def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }             # <<<<<<<<<<<<<<
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }             # <<<<<<<<<<<<<<
  * 
  * def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):
  */
@@ -1912,55 +1913,59 @@ static PyObject *__pyx_pf_6pyplfv_3plf_4plf_with_farray(CYTHON_UNUSED PyObject *
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_plf); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 49, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = NULL;
-      __pyx_t_9 = 0;
+      __pyx_t_8 = PyObject_GetItem(__pyx_v_normalized_tve_with_farray, __pyx_7genexpr__pyx_v_f); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 49, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_9 = NULL;
+      __pyx_t_10 = 0;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
-        __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_7);
-        if (likely(__pyx_t_8)) {
+        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_7);
+        if (likely(__pyx_t_9)) {
           PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
-          __Pyx_INCREF(__pyx_t_8);
+          __Pyx_INCREF(__pyx_t_9);
           __Pyx_INCREF(function);
           __Pyx_DECREF_SET(__pyx_t_7, function);
-          __pyx_t_9 = 1;
+          __pyx_t_10 = 1;
         }
       }
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_7)) {
-        PyObject *__pyx_temp[5] = {__pyx_t_8, __pyx_v_normalized_tve_with_farray, __pyx_v_start_frame_of_trials, __pyx_v_offset, __pyx_v_length};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_9, 4+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L5_error)
-        __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        PyObject *__pyx_temp[5] = {__pyx_t_9, __pyx_t_8, __pyx_v_start_frame_of_trials, __pyx_v_offset, __pyx_v_length};
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_10, 4+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L5_error)
+        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       } else
       #endif
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
-        PyObject *__pyx_temp[5] = {__pyx_t_8, __pyx_v_normalized_tve_with_farray, __pyx_v_start_frame_of_trials, __pyx_v_offset, __pyx_v_length};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_9, 4+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L5_error)
-        __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        PyObject *__pyx_temp[5] = {__pyx_t_9, __pyx_t_8, __pyx_v_start_frame_of_trials, __pyx_v_offset, __pyx_v_length};
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_10, 4+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L5_error)
+        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       } else
       #endif
       {
-        __pyx_t_10 = PyTuple_New(4+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 49, __pyx_L5_error)
-        __Pyx_GOTREF(__pyx_t_10);
-        if (__pyx_t_8) {
-          __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
+        __pyx_t_11 = PyTuple_New(4+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 49, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        if (__pyx_t_9) {
+          __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_9); __pyx_t_9 = NULL;
         }
-        __Pyx_INCREF(__pyx_v_normalized_tve_with_farray);
-        __Pyx_GIVEREF(__pyx_v_normalized_tve_with_farray);
-        PyTuple_SET_ITEM(__pyx_t_10, 0+__pyx_t_9, __pyx_v_normalized_tve_with_farray);
+        __Pyx_GIVEREF(__pyx_t_8);
+        PyTuple_SET_ITEM(__pyx_t_11, 0+__pyx_t_10, __pyx_t_8);
         __Pyx_INCREF(__pyx_v_start_frame_of_trials);
         __Pyx_GIVEREF(__pyx_v_start_frame_of_trials);
-        PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_v_start_frame_of_trials);
+        PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_10, __pyx_v_start_frame_of_trials);
         __Pyx_INCREF(__pyx_v_offset);
         __Pyx_GIVEREF(__pyx_v_offset);
-        PyTuple_SET_ITEM(__pyx_t_10, 2+__pyx_t_9, __pyx_v_offset);
+        PyTuple_SET_ITEM(__pyx_t_11, 2+__pyx_t_10, __pyx_v_offset);
         __Pyx_INCREF(__pyx_v_length);
         __Pyx_GIVEREF(__pyx_v_length);
-        PyTuple_SET_ITEM(__pyx_t_10, 3+__pyx_t_9, __pyx_v_length);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L5_error)
+        PyTuple_SET_ITEM(__pyx_t_11, 3+__pyx_t_10, __pyx_v_length);
+        __pyx_t_8 = 0;
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       }
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       if (unlikely(PyDict_SetItem(__pyx_t_1, (PyObject*)__pyx_t_4, (PyObject*)__pyx_t_2))) __PYX_ERR(0, 49, __pyx_L5_error)
@@ -1980,10 +1985,10 @@ static PyObject *__pyx_pf_6pyplfv_3plf_4plf_with_farray(CYTHON_UNUSED PyObject *
   goto __pyx_L0;
 
   /* "pyplfv/plf.pyx":48
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  * 
  * def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  */
 
@@ -1995,7 +2000,8 @@ static PyObject *__pyx_pf_6pyplfv_3plf_4plf_with_farray(CYTHON_UNUSED PyObject *
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_AddTraceback("pyplfv.plf.plf_with_farray", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -2005,7 +2011,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_4plf_with_farray(CYTHON_UNUSED PyObject *
 }
 
 /* "pyplfv/plf.pyx":51
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  * def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     return { str(ch) : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}
@@ -2261,7 +2267,7 @@ static PyObject *__pyx_pf_6pyplfv_3plf_6plf_of_eegdata_with_farray(CYTHON_UNUSED
   goto __pyx_L0;
 
   /* "pyplfv/plf.pyx":51
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  * def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     return { str(ch) : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}
@@ -3136,7 +3142,7 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * def plf(normalized_tve, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  */
   __pyx_tuple__3 = PyTuple_Pack(6, __pyx_n_s_normalized_tve, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_normalized_tve_within_trials, __pyx_n_s_trial); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
@@ -3144,10 +3150,10 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(4, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_yoshimasasakuragi_Documen, __pyx_n_s_plf, 44, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 44, __pyx_L1_error)
 
   /* "pyplfv/plf.pyx":48
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  * 
  * def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  */
   __pyx_tuple__5 = PyTuple_Pack(4, __pyx_n_s_normalized_tve_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 48, __pyx_L1_error)
@@ -3156,7 +3162,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_yoshimasasakuragi_Documen, __pyx_n_s_plf_with_farray, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 48, __pyx_L1_error)
 
   /* "pyplfv/plf.pyx":51
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  * def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     return { str(ch) : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}
@@ -3219,7 +3225,7 @@ static int __Pyx_InitGlobals(void) {
   __pyx_float_76_0 = PyFloat_FromDouble(76.0); if (unlikely(!__pyx_float_76_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_132_0 = PyFloat_FromDouble(132.0); if (unlikely(!__pyx_float_132_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_288_0 = PyFloat_FromDouble(288.0); if (unlikely(!__pyx_float_288_0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -3422,7 +3428,7 @@ PyMODINIT_FUNC PyInit_plf(void)
  * 
  * def plf(normalized_tve, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  */
   __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6pyplfv_3plf_3plf, NULL, __pyx_n_s_pyplfv_plf); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3430,10 +3436,10 @@ PyMODINIT_FUNC PyInit_plf(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "pyplfv/plf.pyx":48
- *     return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+ *     return np.abs(np.mean(normalized_tve_within_trials, axis=0))
  * 
  * def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  */
   __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6pyplfv_3plf_5plf_with_farray, NULL, __pyx_n_s_pyplfv_plf); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
@@ -3442,7 +3448,7 @@ PyMODINIT_FUNC PyInit_plf(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "pyplfv/plf.pyx":51
- *     return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+ *     return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
  * 
  * def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *     return { str(ch) : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}

@@ -43,10 +43,10 @@ plf returns the normalized_tve_average and p values about it(if test=True).
 
 def plf(normalized_tve, start_frame_of_trials, offset, length):
     normalized_tve_within_trials = [normalized_tve[trial + offset : trial + offset + length] for trial in start_frame_of_trials]
-    return np.abs(np.mean(normalized_tve_within_trials, axis=1))
+    return np.abs(np.mean(normalized_tve_within_trials, axis=0))
 
 def plf_with_farray(normalized_tve_with_farray, start_frame_of_trials, offset, length):
-    return { str(f) : plf(normalized_tve_with_farray, start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
+    return { str(f) : plf(normalized_tve_with_farray[f], start_frame_of_trials, offset, length) for f in normalized_tve_with_farray.keys() }
 
 def plf_of_eegdata_with_farray(normalized_tve_of_eegdata_with_farray, start_frame_of_trials, offset, length):
     return { str(ch) : plf_with_farray(normalized_tve_of_eegdata_with_farray[ch], start_frame_of_trials, offset, length) for ch in normalized_tve_of_eegdata_with_farray.keys()}
