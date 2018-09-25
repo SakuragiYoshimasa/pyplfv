@@ -6,7 +6,7 @@ from pyplfv.utility import load_data
 from pyplfv.utility import save_data
 
 '''
-PLV
+PSI
 '''
 #return phai(t,n)
 def calc_phai(waveleted_signal):

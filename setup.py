@@ -26,6 +26,9 @@ ext_modules = [
               include_dirs=[numpy.get_include(), scipy.get_include()]),
     Extension('pyplfv.psi',
               sources=['pyplfv/psi.pyx'],
+              include_dirs=[numpy.get_include(), scipy.get_include()]),
+    Extension('pyplfv.pli',
+              sources=['pyplfv/pli.pyx'],
               include_dirs=[numpy.get_include(), scipy.get_include()])
 ]
 
