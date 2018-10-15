@@ -5,6 +5,7 @@ from pyplfv.pli import save_pli_with_farray
 from pyplfv.utility import save_data
 from pyplfv.utility import load_data
 from pyplfv.pli import pli_with_farray
+from pyplfv.pli import wpli_with_farray
 from pyplfv.wavelet import waveleted_signal_with_farray
 import time
 
@@ -46,7 +47,11 @@ arr1 = arr1.T
 arr2 = np.array(matdata2['seg'], dtype='float128')
 arr2 = arr2.T
 sig1 = np.hstack([arr1[i] for i in range(trial_num)])
-sig2 = np.hstack([np.hstack([arr2[i][50:], arr2[i][:50]]) for i in range(trial_num)]) # スライドしないと位相差は0付近なのでPLIは低い、すいらどしてあげると高くなる
+# 10Hz = 0.1s で 1 cycle, 50点で1cycle
+# 重みを確認するため、半々に分布させる
+#
+sig2 = np.hstack([np.hstack([arr2[i][(38 if i % 2 == 0 else 2):], arr2[i][:(38 if i % 2 == 0 else 2)]]) for i in range(trial_num)]) 
+#sig2 = np.hstack([np.hstack([arr2[i][13:], arr2[i][:13]]) for i in range(trial_num)]) # スライドしないと位相差は0付近なのでPLIは低い、すいらどしてあげると高くなる
 time_interval = 0.002
 farray = [1.0 * i for i in range(1,30)]
 start_frame_of_trials = [750 * i for i in range(trial_num)]
@@ -61,5 +66,9 @@ pli = pli_with_farray(w1, w2, start_frame_of_trials, offset, length)
 t = time.time() - t
 print(t)
 
+#_plv_with_farray = load_plf_with_farray(plv_path='SampleData/simulationPLV', ch1_str='sim1', ch2_str='sim2')
+show_plv_with_farray(_plv_with_farray=pli)
+
+pli = wpli_with_farray(w1, w2, start_frame_of_trials, offset, length)
 #_plv_with_farray = load_plf_with_farray(plv_path='SampleData/simulationPLV', ch1_str='sim1', ch2_str='sim2')
 show_plv_with_farray(_plv_with_farray=pli)
