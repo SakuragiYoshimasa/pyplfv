@@ -998,7 +998,7 @@ static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_length[] = "length";
 static const char __pyx_k_offset[] = "offset";
 static const char __pyx_k_EEGData[] = "EEGData";
-static const char __pyx_k_float64[] = "float64";
+static const char __pyx_k_float32[] = "float32";
 static const char __pyx_k_phai_tn[] = "phai_tn";
 static const char __pyx_k_filename[] = "filename";
 static const char __pyx_k_phai1_tn[] = "phai1_tn";
@@ -1034,7 +1034,7 @@ static PyObject *__pyx_n_s_denominator;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_f;
 static PyObject *__pyx_n_s_filename;
-static PyObject *__pyx_n_s_float64;
+static PyObject *__pyx_n_s_float32;
 static PyObject *__pyx_n_s_imag;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_keys;
@@ -1344,7 +1344,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_2pli(CYTHON_UNUSED PyObject *__pyx_self, 
  * def pli(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length):
  * 
  *     trial_num = len(start_frame_of_trials)             # <<<<<<<<<<<<<<
- *     _pli = np.zeros(length, dtype='float64')
+ *     _pli = np.zeros(length, dtype='float32')
  * 
  */
   __pyx_t_1 = PyObject_Length(__pyx_v_start_frame_of_trials); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 18, __pyx_L1_error)
@@ -1356,7 +1356,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_2pli(CYTHON_UNUSED PyObject *__pyx_self, 
   /* "pyplfv/pli.pyx":19
  * 
  *     trial_num = len(start_frame_of_trials)
- *     _pli = np.zeros(length, dtype='float64')             # <<<<<<<<<<<<<<
+ *     _pli = np.zeros(length, dtype='float32')             # <<<<<<<<<<<<<<
  * 
  *     for n in range(trial_num):
  */
@@ -1372,7 +1372,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_2pli(CYTHON_UNUSED PyObject *__pyx_self, 
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_length);
   __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_n_s_float64) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_n_s_float32) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
   __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -1382,7 +1382,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_2pli(CYTHON_UNUSED PyObject *__pyx_self, 
   __pyx_t_5 = 0;
 
   /* "pyplfv/pli.pyx":21
- *     _pli = np.zeros(length, dtype='float64')
+ *     _pli = np.zeros(length, dtype='float32')
  * 
  *     for n in range(trial_num):             # <<<<<<<<<<<<<<
  *       trial = start_frame_of_trials[n]
@@ -1714,7 +1714,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_2pli(CYTHON_UNUSED PyObject *__pyx_self, 
     __pyx_t_3 = 0;
 
     /* "pyplfv/pli.pyx":21
- *     _pli = np.zeros(length, dtype='float64')
+ *     _pli = np.zeros(length, dtype='float32')
  * 
  *     for n in range(trial_num):             # <<<<<<<<<<<<<<
  *       trial = start_frame_of_trials[n]
@@ -1964,7 +1964,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
  * def wpli(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length):
  * 
  *     trial_num = len(start_frame_of_trials)             # <<<<<<<<<<<<<<
- *     _pli = np.zeros(length, dtype='float64')
+ *     _pli = np.zeros(length, dtype='float32')
  * 
  */
   __pyx_t_1 = PyObject_Length(__pyx_v_start_frame_of_trials); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 34, __pyx_L1_error)
@@ -1976,9 +1976,9 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   /* "pyplfv/pli.pyx":35
  * 
  *     trial_num = len(start_frame_of_trials)
- *     _pli = np.zeros(length, dtype='float64')             # <<<<<<<<<<<<<<
+ *     _pli = np.zeros(length, dtype='float32')             # <<<<<<<<<<<<<<
  * 
- *     denominator = np.zeros(length, dtype='float64')
+ *     denominator = np.zeros(length, dtype='float32')
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -1992,7 +1992,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_length);
   __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_n_s_float64) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_n_s_float32) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
   __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2002,10 +2002,10 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_5 = 0;
 
   /* "pyplfv/pli.pyx":37
- *     _pli = np.zeros(length, dtype='float64')
+ *     _pli = np.zeros(length, dtype='float32')
  * 
- *     denominator = np.zeros(length, dtype='float64')             # <<<<<<<<<<<<<<
- *     numerator = np.zeros(length, dtype='float64')
+ *     denominator = np.zeros(length, dtype='float32')             # <<<<<<<<<<<<<<
+ *     numerator = np.zeros(length, dtype='float32')
  * 
  */
   __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
@@ -2020,7 +2020,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_length);
   __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_n_s_float64) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_n_s_float32) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
   __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2031,8 +2031,8 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
 
   /* "pyplfv/pli.pyx":38
  * 
- *     denominator = np.zeros(length, dtype='float64')
- *     numerator = np.zeros(length, dtype='float64')             # <<<<<<<<<<<<<<
+ *     denominator = np.zeros(length, dtype='float32')
+ *     numerator = np.zeros(length, dtype='float32')             # <<<<<<<<<<<<<<
  * 
  *     for n in range(trial_num):
  */
@@ -2048,7 +2048,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_length);
   __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_n_s_float64) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_n_s_float32) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
   __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -2058,7 +2058,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_4 = 0;
 
   /* "pyplfv/pli.pyx":40
- *     numerator = np.zeros(length, dtype='float64')
+ *     numerator = np.zeros(length, dtype='float32')
  * 
  *     for n in range(trial_num):             # <<<<<<<<<<<<<<
  *       trial = start_frame_of_trials[n]
@@ -2510,7 +2510,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_3 = 0;
 
     /* "pyplfv/pli.pyx":40
- *     numerator = np.zeros(length, dtype='float64')
+ *     numerator = np.zeros(length, dtype='float32')
  * 
  *     for n in range(trial_num):             # <<<<<<<<<<<<<<
  *       trial = start_frame_of_trials[n]
@@ -4403,7 +4403,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_f, __pyx_k_f, sizeof(__pyx_k_f), 0, 0, 1, 1},
   {&__pyx_n_s_filename, __pyx_k_filename, sizeof(__pyx_k_filename), 0, 0, 1, 1},
-  {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
+  {&__pyx_n_s_float32, __pyx_k_float32, sizeof(__pyx_k_float32), 0, 0, 1, 1},
   {&__pyx_n_s_imag, __pyx_k_imag, sizeof(__pyx_k_imag), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_keys, __pyx_k_keys, sizeof(__pyx_k_keys), 0, 0, 1, 1},

@@ -6,6 +6,7 @@ from pyplfv.utility import save_data
 '''
 Wavelet and parameters of that.
 w = wave count
+https://qiita.com/cosac141/items/185c9b20b42769499067
 '''
 def gen_parameters(f, w=7.0):
     '''
