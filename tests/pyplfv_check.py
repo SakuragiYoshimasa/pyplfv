@@ -1,7 +1,7 @@
 import numpy as np
 from pyplfv.wavelet import morlet_wavelet, gen_parameters
 import matplotlib.pyplot as plt
-'''
+
 f0 = 5.0
 sampling_interval = 0.002
 
@@ -17,8 +17,7 @@ plt.plot(time_points, wavelet)
 
 
 sigma_f, sigma_t, wavelet_duration, A = gen_parameters(f0, w=12.0)
-print(wavel
-et_duration)
+print(wavelet_duration)
 #wavelet_duration = 2.0
 time_points = np.arange(-wavelet_duration, wavelet_duration + sampling_interval, sampling_interval)
 wavelet = [morlet_wavelet(t, f0, sigma_f, sigma_t, wavelet_duration, A) for t in time_points]
@@ -62,3 +61,4 @@ pli = pli_with_farray(w1, w2, start_frame_of_trials, offset, length)
 plv = plv_with_farray(w1, w2, start_frame_of_trials, offset, length)
 print(type(pli['1.0'][0]))
 print(type(plv['1.0'][0]))
+'''

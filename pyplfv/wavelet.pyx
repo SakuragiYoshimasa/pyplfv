@@ -17,7 +17,7 @@ def gen_parameters(f, w=7.0):
     '''
     sigma_f = np.float128(f / w)
     sigma_t = np.float128(w / (2.0 * np.pi * f))
-    wavelet_duration =  np.float128(2.0 * sigma_t)
+    wavelet_duration =  np.float128(6.0 * sigma_t)
     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
     return [sigma_f, sigma_t, wavelet_duration, A]
 

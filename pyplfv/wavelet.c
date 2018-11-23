@@ -1208,6 +1208,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_10save_waveleted_signal_with_farray(C
 static PyObject *__pyx_pf_6pyplfv_7wavelet_12save_waveleted_eegdata_with_farray(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_eegdata, PyObject *__pyx_v_sampling_interval, PyObject *__pyx_v_farray, PyObject *__pyx_v_filename, PyObject *__pyx_v_sampling_slice); /* proto */
 static PyObject *__pyx_float_1_0;
 static PyObject *__pyx_float_2_0;
+static PyObject *__pyx_float_6_0;
 static PyObject *__pyx_float_7_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_tuple_;
@@ -1321,7 +1322,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_gen_parameters(CYTHON_UNUSED PyObject
  *     '''
  *     sigma_f = np.float128(f / w)             # <<<<<<<<<<<<<<
  *     sigma_t = np.float128(w / (2.0 * np.pi * f))
- *     wavelet_duration =  np.float128(2.0 * sigma_t)
+ *     wavelet_duration =  np.float128(6.0 * sigma_t)
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -1383,7 +1384,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_gen_parameters(CYTHON_UNUSED PyObject
  *     '''
  *     sigma_f = np.float128(f / w)
  *     sigma_t = np.float128(w / (2.0 * np.pi * f))             # <<<<<<<<<<<<<<
- *     wavelet_duration =  np.float128(2.0 * sigma_t)
+ *     wavelet_duration =  np.float128(6.0 * sigma_t)
  *     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
  */
   __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
@@ -1457,7 +1458,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_gen_parameters(CYTHON_UNUSED PyObject
   /* "pyplfv/wavelet.pyx":20
  *     sigma_f = np.float128(f / w)
  *     sigma_t = np.float128(w / (2.0 * np.pi * f))
- *     wavelet_duration =  np.float128(2.0 * sigma_t)             # <<<<<<<<<<<<<<
+ *     wavelet_duration =  np.float128(6.0 * sigma_t)             # <<<<<<<<<<<<<<
  *     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
  *     return [sigma_f, sigma_t, wavelet_duration, A]
  */
@@ -1466,7 +1467,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_gen_parameters(CYTHON_UNUSED PyObject
   __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float128); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Multiply(__pyx_float_2_0, __pyx_v_sigma_t); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_float_6_0, __pyx_v_sigma_t); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -1519,7 +1520,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_gen_parameters(CYTHON_UNUSED PyObject
 
   /* "pyplfv/wavelet.pyx":21
  *     sigma_t = np.float128(w / (2.0 * np.pi * f))
- *     wavelet_duration =  np.float128(2.0 * sigma_t)
+ *     wavelet_duration =  np.float128(6.0 * sigma_t)
  *     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))             # <<<<<<<<<<<<<<
  *     return [sigma_f, sigma_t, wavelet_duration, A]
  * 
@@ -1644,7 +1645,7 @@ static PyObject *__pyx_pf_6pyplfv_7wavelet_gen_parameters(CYTHON_UNUSED PyObject
   __pyx_t_1 = 0;
 
   /* "pyplfv/wavelet.pyx":22
- *     wavelet_duration =  np.float128(2.0 * sigma_t)
+ *     wavelet_duration =  np.float128(6.0 * sigma_t)
  *     A =  np.float128(1.0 / (sigma_t * np.sqrt(2.0 * np.pi)))
  *     return [sigma_f, sigma_t, wavelet_duration, A]             # <<<<<<<<<<<<<<
  * 
@@ -4063,6 +4064,7 @@ static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_float_1_0 = PyFloat_FromDouble(1.0); if (unlikely(!__pyx_float_1_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_2_0 = PyFloat_FromDouble(2.0); if (unlikely(!__pyx_float_2_0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_float_6_0 = PyFloat_FromDouble(6.0); if (unlikely(!__pyx_float_6_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_7_0 = PyFloat_FromDouble(7.0); if (unlikely(!__pyx_float_7_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
