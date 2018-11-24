@@ -52,7 +52,7 @@ def wpli(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length):
     numerator = np.abs(numerator / float(trial_num))
     wpli = numerator / denominator
 
-    return wpli
+    return wpli.astype('float32')
 
 def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):
   return { str(f) : pli(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_frame_of_trials, offset, length) for f in waveleted_ch1_with_farray.keys() }

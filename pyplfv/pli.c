@@ -994,10 +994,12 @@ static const char __pyx_k_pli_2[] = "_pli";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_trial[] = "trial";
 static const char __pyx_k_zeros[] = "zeros";
+static const char __pyx_k_astype[] = "astype";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_length[] = "length";
 static const char __pyx_k_offset[] = "offset";
 static const char __pyx_k_EEGData[] = "EEGData";
+static const char __pyx_k_float32[] = "float32";
 static const char __pyx_k_float64[] = "float64";
 static const char __pyx_k_phai_tn[] = "phai_tn";
 static const char __pyx_k_filename[] = "filename";
@@ -1028,12 +1030,14 @@ static const char __pyx_k_waveleted_ch2_with_farray[] = "waveleted_ch2_with_farr
 static PyObject *__pyx_n_s_EEGData;
 static PyObject *__pyx_n_s_abs;
 static PyObject *__pyx_n_s_angle;
+static PyObject *__pyx_n_s_astype;
 static PyObject *__pyx_n_s_calc_phai;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_denominator;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_f;
 static PyObject *__pyx_n_s_filename;
+static PyObject *__pyx_n_s_float32;
 static PyObject *__pyx_n_s_float64;
 static PyObject *__pyx_n_s_imag;
 static PyObject *__pyx_n_s_import;
@@ -1085,23 +1089,24 @@ static PyObject *__pyx_pf_6pyplfv_3pli_12save_wpli(CYTHON_UNUSED PyObject *__pyx
 static PyObject *__pyx_pf_6pyplfv_3pli_14save_pli_with_farray(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_waveleted_ch1_with_farray, PyObject *__pyx_v_waveleted_ch2_with_farray, PyObject *__pyx_v_start_frame_of_trials, PyObject *__pyx_v_offset, PyObject *__pyx_v_length, PyObject *__pyx_v_filename); /* proto */
 static PyObject *__pyx_pf_6pyplfv_3pli_16save_wpli_with_farray(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_waveleted_ch1_with_farray, PyObject *__pyx_v_waveleted_ch2_with_farray, PyObject *__pyx_v_start_frame_of_trials, PyObject *__pyx_v_offset, PyObject *__pyx_v_length, PyObject *__pyx_v_filename); /* proto */
 static PyObject *__pyx_tuple_;
-static PyObject *__pyx_tuple__3;
-static PyObject *__pyx_tuple__5;
-static PyObject *__pyx_tuple__7;
-static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_tuple__11;
-static PyObject *__pyx_tuple__13;
-static PyObject *__pyx_tuple__15;
-static PyObject *__pyx_tuple__17;
-static PyObject *__pyx_codeobj__2;
-static PyObject *__pyx_codeobj__4;
-static PyObject *__pyx_codeobj__6;
-static PyObject *__pyx_codeobj__8;
-static PyObject *__pyx_codeobj__10;
-static PyObject *__pyx_codeobj__12;
-static PyObject *__pyx_codeobj__14;
-static PyObject *__pyx_codeobj__16;
-static PyObject *__pyx_codeobj__18;
+static PyObject *__pyx_tuple__2;
+static PyObject *__pyx_tuple__4;
+static PyObject *__pyx_tuple__6;
+static PyObject *__pyx_tuple__8;
+static PyObject *__pyx_tuple__10;
+static PyObject *__pyx_tuple__12;
+static PyObject *__pyx_tuple__14;
+static PyObject *__pyx_tuple__16;
+static PyObject *__pyx_tuple__18;
+static PyObject *__pyx_codeobj__3;
+static PyObject *__pyx_codeobj__5;
+static PyObject *__pyx_codeobj__7;
+static PyObject *__pyx_codeobj__9;
+static PyObject *__pyx_codeobj__11;
+static PyObject *__pyx_codeobj__13;
+static PyObject *__pyx_codeobj__15;
+static PyObject *__pyx_codeobj__17;
+static PyObject *__pyx_codeobj__19;
 
 /* "pyplfv/pli.pyx":13
  * '''
@@ -2605,7 +2610,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
  *     numerator = np.abs(numerator / float(trial_num))
  *     wpli = numerator / denominator             # <<<<<<<<<<<<<<
  * 
- *     return wpli
+ *     return wpli.astype('float32')
  */
   __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_v_numerator, __pyx_v_denominator); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -2615,13 +2620,18 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
   /* "pyplfv/pli.pyx":55
  *     wpli = numerator / denominator
  * 
- *     return wpli             # <<<<<<<<<<<<<<
+ *     return wpli.astype('float32')             # <<<<<<<<<<<<<<
  * 
  * def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_wpli);
-  __pyx_r = __pyx_v_wpli;
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_wpli, __pyx_n_s_astype); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_5;
+  __pyx_t_5 = 0;
   goto __pyx_L0;
 
   /* "pyplfv/pli.pyx":32
@@ -2660,7 +2670,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_4wpli(CYTHON_UNUSED PyObject *__pyx_self,
 }
 
 /* "pyplfv/pli.pyx":57
- *     return wpli
+ *     return wpli.astype('float32')
  * 
  * def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *   return { str(f) : pli(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_frame_of_trials, offset, length) for f in waveleted_ch1_with_farray.keys() }
@@ -2942,7 +2952,7 @@ static PyObject *__pyx_pf_6pyplfv_3pli_6pli_with_farray(CYTHON_UNUSED PyObject *
   goto __pyx_L0;
 
   /* "pyplfv/pli.pyx":57
- *     return wpli
+ *     return wpli.astype('float32')
  * 
  * def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *   return { str(f) : pli(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_frame_of_trials, offset, length) for f in waveleted_ch1_with_farray.keys() }
@@ -4397,12 +4407,14 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_EEGData, __pyx_k_EEGData, sizeof(__pyx_k_EEGData), 0, 0, 1, 1},
   {&__pyx_n_s_abs, __pyx_k_abs, sizeof(__pyx_k_abs), 0, 0, 1, 1},
   {&__pyx_n_s_angle, __pyx_k_angle, sizeof(__pyx_k_angle), 0, 0, 1, 1},
+  {&__pyx_n_s_astype, __pyx_k_astype, sizeof(__pyx_k_astype), 0, 0, 1, 1},
   {&__pyx_n_s_calc_phai, __pyx_k_calc_phai, sizeof(__pyx_k_calc_phai), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_denominator, __pyx_k_denominator, sizeof(__pyx_k_denominator), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_f, __pyx_k_f, sizeof(__pyx_k_f), 0, 0, 1, 1},
   {&__pyx_n_s_filename, __pyx_k_filename, sizeof(__pyx_k_filename), 0, 0, 1, 1},
+  {&__pyx_n_s_float32, __pyx_k_float32, sizeof(__pyx_k_float32), 0, 0, 1, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
   {&__pyx_n_s_imag, __pyx_k_imag, sizeof(__pyx_k_imag), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -4457,6 +4469,17 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
+  /* "pyplfv/pli.pyx":55
+ *     wpli = numerator / denominator
+ * 
+ *     return wpli.astype('float32')             # <<<<<<<<<<<<<<
+ * 
+ * def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):
+ */
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_float32); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
+
   /* "pyplfv/pli.pyx":13
  * '''
  * 
@@ -4464,10 +4487,10 @@ static int __Pyx_InitCachedConstants(void) {
  *     return np.angle(waveleted_signal)
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_waveleted_signal); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 13, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple_);
-  __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_calc_phai, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_n_s_waveleted_signal); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
+  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__2, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_calc_phai, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(0, 13, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":16
  *     return np.angle(waveleted_signal)
@@ -4476,10 +4499,10 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     trial_num = len(start_frame_of_trials)
  */
-  __pyx_tuple__3 = PyTuple_Pack(12, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_trial_num, __pyx_n_s_pli_2, __pyx_n_s_n, __pyx_n_s_trial, __pyx_n_s_phai1_tn, __pyx_n_s_phai2_tn, __pyx_n_s_phai_tn); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(5, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_pli, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(12, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_trial_num, __pyx_n_s_pli_2, __pyx_n_s_n, __pyx_n_s_trial, __pyx_n_s_phai1_tn, __pyx_n_s_phai2_tn, __pyx_n_s_phai_tn); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(5, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_pli, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 16, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":32
  *     return _pli
@@ -4488,22 +4511,22 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     trial_num = len(start_frame_of_trials)
  */
-  __pyx_tuple__5 = PyTuple_Pack(16, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_trial_num, __pyx_n_s_pli_2, __pyx_n_s_denominator, __pyx_n_s_numerator, __pyx_n_s_n, __pyx_n_s_trial, __pyx_n_s_phai1_tn, __pyx_n_s_phai2_tn, __pyx_n_s_phai_tn, __pyx_n_s_imag, __pyx_n_s_wpli); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 32, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(5, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_wpli, 32, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(16, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_trial_num, __pyx_n_s_pli_2, __pyx_n_s_denominator, __pyx_n_s_numerator, __pyx_n_s_n, __pyx_n_s_trial, __pyx_n_s_phai1_tn, __pyx_n_s_phai2_tn, __pyx_n_s_phai_tn, __pyx_n_s_imag, __pyx_n_s_wpli); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(5, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_wpli, 32, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(0, 32, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":57
- *     return wpli
+ *     return wpli.astype('float32')
  * 
  * def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *   return { str(f) : pli(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_frame_of_trials, offset, length) for f in waveleted_ch1_with_farray.keys() }
  * 
  */
-  __pyx_tuple__7 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_f); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 57, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(5, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_pli_with_farray, 57, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_f); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(5, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_pli_with_farray, 57, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 57, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":61
  * 
@@ -4512,10 +4535,10 @@ static int __Pyx_InitCachedConstants(void) {
  *   return { str(f) : wpli(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_frame_of_trials, offset, length) for f in waveleted_ch1_with_farray.keys() }
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_f); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 61, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(5, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_wpli_with_farray, 61, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_f); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(5, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_wpli_with_farray, 61, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 61, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":65
  * 
@@ -4524,10 +4547,10 @@ static int __Pyx_InitCachedConstants(void) {
  *   save_data(filename, pli(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length))
  *   return
  */
-  __pyx_tuple__11 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_pli, 65, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_pli, 65, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 65, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":69
  *   return
@@ -4536,10 +4559,10 @@ static int __Pyx_InitCachedConstants(void) {
  *   save_data(filename, wpli(waveleted_ch1, waveleted_ch2, start_frame_of_trials, offset, length))
  *   return
  */
-  __pyx_tuple__13 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_wpli, 69, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1, __pyx_n_s_waveleted_ch2, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_wpli, 69, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 69, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":73
  *   return
@@ -4548,10 +4571,10 @@ static int __Pyx_InitCachedConstants(void) {
  *   save_data(filename, pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length))
  * 
  */
-  __pyx_tuple__15 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 73, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_pli_with_farray, 73, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_pli_with_farray, 73, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 73, __pyx_L1_error)
 
   /* "pyplfv/pli.pyx":76
  *   save_data(filename, pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length))
@@ -4559,10 +4582,10 @@ static int __Pyx_InitCachedConstants(void) {
  * def save_wpli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length, filename):             # <<<<<<<<<<<<<<
  *   save_data(filename, wpli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length))
  */
-  __pyx_tuple__17 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 76, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_wpli_with_farray, 76, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_tuple__18 = PyTuple_Pack(6, __pyx_n_s_waveleted_ch1_with_farray, __pyx_n_s_waveleted_ch2_with_farray, __pyx_n_s_start_frame_of_trials, __pyx_n_s_offset, __pyx_n_s_length, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyplfv_pli_pyx, __pyx_n_s_save_wpli_with_farray, 76, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4814,7 +4837,7 @@ static int __pyx_pymod_exec_pli(PyObject *__pyx_pyinit_module)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "pyplfv/pli.pyx":57
- *     return wpli
+ *     return wpli.astype('float32')
  * 
  * def pli_with_farray(waveleted_ch1_with_farray, waveleted_ch2_with_farray, start_frame_of_trials, offset, length):             # <<<<<<<<<<<<<<
  *   return { str(f) : pli(waveleted_ch1_with_farray[f], waveleted_ch2_with_farray[f], start_frame_of_trials, offset, length) for f in waveleted_ch1_with_farray.keys() }

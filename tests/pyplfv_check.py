@@ -1,7 +1,7 @@
 import numpy as np
 from pyplfv.wavelet import morlet_wavelet, gen_parameters
 import matplotlib.pyplot as plt
-
+'''
 f0 = 5.0
 sampling_interval = 0.002
 
@@ -31,7 +31,7 @@ plt.show()
 '''
 import scipy.io as sio
 from pyplfv.wavelet import waveleted_signal_with_farray
-from pyplfv.pli import pli_with_farray
+from pyplfv.pli import wpli_with_farray
 from pyplfv.plv import plv_with_farray
 
 matdata1 = sio.loadmat('SampleData/simulation_data1.mat')
@@ -57,8 +57,7 @@ w1 = waveleted_signal_with_farray(signal=sig1, sampling_interval=time_interval, 
 w2 = waveleted_signal_with_farray(signal=sig2, sampling_interval=time_interval, farray=farray)
 
 
-pli = pli_with_farray(w1, w2, start_frame_of_trials, offset, length)
+pli = wpli_with_farray(w1, w2, start_frame_of_trials, offset, length)
 plv = plv_with_farray(w1, w2, start_frame_of_trials, offset, length)
 print(type(pli['1.0'][0]))
 print(type(plv['1.0'][0]))
-'''
